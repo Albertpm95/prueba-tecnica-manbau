@@ -1,0 +1,15 @@
+<div class="filter-container" [formGroup]="filterForm">
+  <select formControlName="statusId">
+    <option value="">Todos los estados</option>
+    @for (status of facade.estados(); track status.id) {
+      <option [value]="status.id">{{ status.label }}</option>
+    }
+  </select>
+  <select formControlName="priorityId">
+    <option value="">Todas las prioridades</option>
+    @for (priority of facade.prioridades(); track priority.id) {
+      <option [value]="priority.id">{{ priority.label }}</option>
+    }
+  </select>
+  <input type="text" formControlName="searchText" placeholder="Buscar por título (mín 3 chars)">
+</div>

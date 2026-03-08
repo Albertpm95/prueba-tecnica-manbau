@@ -1,0 +1,10 @@
+.filter-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+select, input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+}

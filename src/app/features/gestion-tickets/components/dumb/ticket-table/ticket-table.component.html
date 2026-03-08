@@ -1,0 +1,20 @@
+<table>
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Prioridad</th>
+      <th>Estado</th>
+      <th>Fecha de Creación</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (ticket of tickets(); track ticket.id) {
+      <tr (click)="onRowClick(ticket)">
+        <td>{{ ticket.ticketTitle }}</td>
+        <td>{{ ticket.priorityLevel }}</td>
+        <td>{{ ticket.statusType }}</td>
+        <td>{{ ticket.createdAt | date }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

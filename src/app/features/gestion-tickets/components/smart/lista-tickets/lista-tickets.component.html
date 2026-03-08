@@ -1,0 +1,9 @@
+<div>
+  <app-ticket-filter (filterChange)="onFilterChange($event)"></app-ticket-filter>
+  <app-ticket-table [tickets]="displayedTickets()" (rowClick)="onRowClick($event)"></app-ticket-table>
+  <app-pagination
+    [currentPage]="paginationInfo().currentPage"
+    [totalPages]="paginationInfo().totalPages"
+    (paginationChange)="onPaginationChange($event)">
+  </app-pagination>
+</div>
