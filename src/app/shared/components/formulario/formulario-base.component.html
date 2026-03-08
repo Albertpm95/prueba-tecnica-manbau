@@ -1,0 +1,32 @@
+<form [formGroup]="form()" >
+  @for (control of config().controles; track control.nombre) {
+    <div [ngClass]="control.columnas || 'col-span-12'">
+      <label>{{ control.label }}</label>
+      @switch (control.tipo) {
+        @case ('input') {
+          <input [formControlName]="control.nombre"
+                 [placeholder]="control.placeholder"
+                 [readonly]="isReadOnly || control.readonly"
+>        }
+        @case ('select') {
+          <select [formControlName]="control.nombre"
+                  [disabled]="!!(isReadOnly || control.disabled)"
+                  >
+            <option value="undefined">Seleccione...</option>
+            @for (opt of control.opciones; track opt.id) {
+              <option [value]="opt.id">{{ opt.label }}</option>
+            }
+          </select>
+        }
+        @case ('textarea') {
+          <textarea [formControlName]="control.nombre"
+                    [placeholder]="control.placeholder"
+                    [readonly]="isReadOnly || control.readonly"></textarea>
+        }
+        @default {
+          <!-- Para checkbox y radio, agregar más casos si necesario -->
+        }
+      }
+    </div>
+  }
+</form>
