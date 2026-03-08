@@ -35,8 +35,8 @@ export class ListaTicketsComponent {
   }
 
   public onRowClick(ticket: Ticket): void {
-    console.log('Ticket clicked:', ticket);
-    // Aquí se podría navegar a detalle o emitir evento
+    if(ticket.id == null) return;
+    this.facade.abrirDetalles(ticket.id);
   }
 
   public onPaginationChange(change: Partial<PaginationInfo> ): void {

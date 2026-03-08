@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable, of, tap } from 'rxjs';
 import { TicketDTO } from '../../dtos/ticket.dto';
 import { CATALOGOS_API, TICKET_API } from '../api/ticket.api';
-import { TicketFilters } from '../../models/ticket-filter';
 import { CatalogoDTO } from '../../../../shared/dtos/catalogo.dto';
 
 @Injectable({
@@ -45,35 +44,43 @@ export class GestionTicketsService {
     return this.http.get<TicketDTO>(TICKET_API.detail(id));
   }
 
-public getTickets(
-  currentPage: number, 
-  pageSize: number, 
-  filtro: TicketFilters, 
-  sort: string, 
-  order: 'ASC' | 'DESC'
-): Observable<TicketDTO[]> {
-  
-  // 1. Construimos los parámetros base según la documentación v1
-  // El signo '-' delante del campo en _sort indica orden descendente
-  const sortParam = order === 'DESC' ? `-${sort}` : sort;
+  public getTickets(
+    currentPage: number,
+    pageSize: number,
+    filtro: Partial<TicketDTO>,
+    sort: string,
+    order: 'ASC' | 'DESC'
+  ): Observable<TicketDTO[]> {
 
-  let params = new HttpParams()
-    .set('_page', currentPage.toString())
-    .set('_per_page', pageSize.toString()) // Cambiado de _limit a _per_page
-    .set('_sort', sortParam); // v1 usa +/- para el orden
+    // 1. Construimos los parámetros base según la documentación v1
+    // El signo '-' delante del campo en _sort indica orden descendente
+    const sortParam = order === 'DESC' ? `-${sort}` : sort;
 
-  // 2. Aplicamos filtros usando la sintaxis field:operator=value
-  if (filtro.searchText) {
-    // Si quieres buscar en el título (ajusta 'ticket_title' al nombre de tu campo)
-    params = params.set('ticket_title:contains', filtro.searchText);
+    let params = new HttpParams()
+      .set('_page', currentPage.toString())
+      .set('_per_page', pageSize.toString()) // Cambiado de _limit a _per_page
+      .set('_sort', sortParam); // v1 usa +/- para el orden
+
+    // 2. Aplicamos filtros usando la sintaxis field:operator=value
+    if (filtro.ticket_title) {
+      // Si quieres buscar en el título (ajusta 'ticket_title' al nombre de tu campo)
+      params = params.set('ticket_title:contains', filtro.ticket_title);
+    }
+    if (filtro.status_type) {
+      params = params.set('status_type', filtro.status_type);
+    }
+    if (filtro.priority_level) {
+      params = params.set('priority_level', filtro.priority_level);
+    }
+
+    console.log('Parámetros de consulta:', params.toString());
+
+    console.log('URL de consulta:', `${TICKET_API.list()}?${params.toString()}`);
+
+    // 3. Tipamos la respuesta para poder extraer 'data' con seguridad
+    return this.http.get<{ data: TicketDTO[] }>(TICKET_API.list(), { params }).pipe(
+      map(response => response.data), // Extraemos el array de la propiedad 'data'
+      tap(tickets => console.log('Tickets recibidos con éxito:', tickets))
+    );
   }
-
-  console.log('URL de consulta:', `${TICKET_API.list()}?${params.toString()}`);
-
-  // 3. Tipamos la respuesta para poder extraer 'data' con seguridad
-  return this.http.get<{ data: TicketDTO[] }>(TICKET_API.list(), { params }).pipe(
-    map(response => response.data), // Extraemos el array de la propiedad 'data'
-    tap(tickets => console.log('Tickets recibidos con éxito:', tickets))
-  );
-}
 }

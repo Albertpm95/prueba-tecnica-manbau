@@ -1,7 +1,7 @@
 import { Injectable, inject, signal, computed } from "@angular/core";
 import { take, map, tap, catchError, finalize, of } from "rxjs";
 import { GestionTicketsService } from "../core/services/gestion-tickets.service";
-import { mapTicketDtoToModel } from "../mappers/ticket.mapper";
+import { mapTicketDtoToModel, mapTicketFiltersModelToDto } from "../mappers/ticket.mapper";
 import { PaginationInfo } from "../models/pagination";
 import { TicketFilters } from "../models/ticket-filter";
 import { TicketState } from "../models/ticket.state";
@@ -44,6 +44,7 @@ export class GestionTicketsFacade {
     this.listState.update(state => ({
       ...state,
       filters,
+      cachedPagesItems: new Map(),
       currentPage: 1 // Reiniciamos a la primera página al cambiar filtros
     }));
     this.buscarTickets();
@@ -52,16 +53,18 @@ export class GestionTicketsFacade {
     this.listState.update(state => ({
       ...state,
       currentPage: pagination.currentPage?? 1,
+      cachedPagesItems: new Map(),
       pageSize: pagination.pageSize?? 10
     }));
     this.buscarTickets();
   }
   public buscarTickets() {
+    console.log('Buscando tickets con filtros:', this.listState().filters, 'página:', this.listState().currentPage);
     const state = this.listState();
     const pageNumber = state.currentPage;
 
     const cached = state.cachedPagesItems.get(pageNumber);
-
+    console.log('Página cacheada encontrada:', !!cached);
     if (cached) {
       this.listState.update((s) => ({
         ...s,
@@ -79,7 +82,7 @@ export class GestionTicketsFacade {
       .getTickets(
         state.currentPage,
         state.pageSize,
-        state.filters,
+        mapTicketFiltersModelToDto(state.filters),
         state.sort,
         state.sortDirection.toUpperCase() as 'ASC' | 'DESC',
       )
