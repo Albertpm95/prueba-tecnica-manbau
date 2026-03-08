@@ -1,9 +1,9 @@
 export interface TicketDTO {
-  id: string;
+  id: number;
   ticket_title: string;
   ticket_description: string;
   status_type: string;
   priority_level: string;
-  created_at: string;
+  created_at: number;
   assigned_user_id: number;
 }
