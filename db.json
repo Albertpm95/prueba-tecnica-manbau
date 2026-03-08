@@ -44,23 +44,72 @@
       "priority_level": "low",
       "created_at": "2026-02-28T11:00:00Z",
       "assigned_user_id": 102
+    },
+    {
+      "id": "5fed",
+      "params": {
+        "searchText": "Bob Swanson"
+      }
     }
   ],
   "users": [
-    { "id": 101, "full_name": "Alan Turing", "user_role": "Senior Dev", "username": "alan", "password": "admin" },
-    { "id": 102, "full_name": "Ada Lovelace", "user_role": "UI Designer", "username": "ada", "password": "admin" },
-    { "id": 103, "full_name": "Linus Torvalds", "user_role": "SysAdmin", "username": "linus", "password": "admin" }
+    {
+      "id": "101",
+      "full_name": "Alan Turing",
+      "user_role": "Senior Dev",
+      "username": "alan",
+      "password": "admin"
+    },
+    {
+      "id": "102",
+      "full_name": "Ada Lovelace",
+      "user_role": "UI Designer",
+      "username": "ada",
+      "password": "admin"
+    },
+    {
+      "id": "103",
+      "full_name": "Linus Torvalds",
+      "user_role": "SysAdmin",
+      "username": "linus",
+      "password": "admin"
+    }
   ],
-  "ticket_statuses": [
-    { "id": 1, "label": "Open" },
-    { "id": 2, "label": "In Progress" },
-    { "id": 3, "label": "Resolved" },
-    { "id": 4, "label": "Closed" }
+  "estados": [
+    {
+      "id": "1",
+      "label": "open"
+    },
+    {
+      "id": "2",
+      "label": "in_progress"
+    },
+    {
+      "id": "3",
+      "label": "resolved"
+    },
+    {
+      "id": "4",
+      "label": "closed"
+    }
   ],
   "priorities": [
-    { "id": 1, "label": "Crítico" },
-    { "id": 2, "label": "Alto" },
-    { "id": 3, "label": "Medio" },
-    { "id": 4, "label": "Bajo" }
-  ]
+    {
+      "id": "1",
+      "label": "critical"
+    },
+    {
+      "id": "2",
+      "label": "high"
+    },
+    {
+      "id": "3",
+      "label": "medium"
+    },
+    {
+      "id": "4",
+      "label": "low"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
