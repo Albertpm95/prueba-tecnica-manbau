@@ -1,0 +1,54 @@
+{
+  "tickets": [
+    {
+      "id": "1",
+      "ticket_title": "Error en el login de usuarios",
+      "ticket_description": "Los usuarios no pueden acceder con cuentas de Google.",
+      "status_type": "open",
+      "priority_level": "critical",
+      "created_at": "2026-03-01T10:00:00Z",
+      "assigned_user_id": 101
+    },
+    {
+      "id": "2",
+      "ticket_title": "Actualizar colores del header",
+      "ticket_description": "Cambiar el azul corporativo por el nuevo tono de la marca.",
+      "status_type": "in_progress",
+      "priority_level": "low",
+      "created_at": "2026-03-05T14:30:00Z",
+      "assigned_user_id": 102
+    },
+    {
+      "id": "3",
+      "ticket_title": "Lentitud en la carga de reportes",
+      "ticket_description": "El reporte mensual tarda más de 10 segundos en generar el PDF.",
+      "status_type": "open",
+      "priority_level": "high",
+      "created_at": "2026-03-07T09:15:00Z",
+      "assigned_user_id": 101
+    },
+    {
+      "id": "4",
+      "ticket_title": "Revisar logs del servidor",
+      "ticket_description": "Se detectaron picos de CPU inusuales a las 3 AM.",
+      "status_type": "resolved",
+      "priority_level": "medium",
+      "created_at": "2026-03-08T03:00:00Z",
+      "assigned_user_id": 103
+    },
+    {
+      "id": "5",
+      "ticket_title": "Corregir typo en footer",
+      "ticket_description": "Dice 'Contactanos' sin tilde.",
+      "status_type": "closed",
+      "priority_level": "low",
+      "created_at": "2026-02-28T11:00:00Z",
+      "assigned_user_id": 102
+    }
+  ],
+  "users": [
+    { "id": 101, "full_name": "Alan Turing", "user_role": "Senior Dev" },
+    { "id": 102, "full_name": "Ada Lovelace", "user_role": "UI Designer" },
+    { "id": 103, "full_name": "Linus Torvalds", "user_role": "SysAdmin" }
+  ]
+}
