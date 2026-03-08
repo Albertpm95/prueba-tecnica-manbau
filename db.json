@@ -47,8 +47,8 @@
     }
   ],
   "users": [
-    { "id": 101, "full_name": "Alan Turing", "user_role": "Senior Dev" },
-    { "id": 102, "full_name": "Ada Lovelace", "user_role": "UI Designer" },
-    { "id": 103, "full_name": "Linus Torvalds", "user_role": "SysAdmin" }
+    { "id": 101, "full_name": "Alan Turing", "user_role": "Senior Dev", "username": "alan", "password": "admin" },
+    { "id": 102, "full_name": "Ada Lovelace", "user_role": "UI Designer", "username": "ada", "password": "admin" },
+    { "id": 103, "full_name": "Linus Torvalds", "user_role": "SysAdmin", "username": "linus", "password": "admin" }
   ]
 }

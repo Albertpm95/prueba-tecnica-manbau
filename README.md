@@ -5,6 +5,8 @@
  - Gemini para revisar los ficheros finales de README y CONTEXT.
  - Gemini para rellenar de datos el db.json
  - Gemini para crear y configurar algo de ci/cd y formateo basico con husky y lint-staged
+ - Gemini para discutir la creacion de un componente especifico para el layout (usuario)
+ - Copilot para la gestion del usuario. 
 
 # Dependencias
 Angualar 21, la version estable mas moderna
