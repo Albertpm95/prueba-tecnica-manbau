@@ -4,7 +4,7 @@ import { ListaTicketsComponent } from './components/smart/lista-tickets/lista-ti
 import { GestionTicketsFacade } from './facade/gestion-tickets.facade';
 
 @Component({
-  selector: 'app-gestion-tickets',
+  selector: 'page-gestion-tickets',
   standalone: true,
   imports: [CommonModule, ListaTicketsComponent],
   template: `

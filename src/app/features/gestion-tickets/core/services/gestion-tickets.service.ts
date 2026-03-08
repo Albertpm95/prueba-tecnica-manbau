@@ -4,6 +4,7 @@ import { map, Observable, of, tap } from 'rxjs';
 import { TicketDTO } from '../../dtos/ticket.dto';
 import { CATALOGOS_API, TICKET_API } from '../api/ticket.api';
 import { CatalogoDTO } from '../../../../shared/dtos/catalogo.dto';
+import { ResultadosBusquedaDto } from '../../dtos/resultados-busqueda.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class GestionTicketsService {
     filtro: Partial<TicketDTO>,
     sort: string,
     order: 'ASC' | 'DESC'
-  ): Observable<TicketDTO[]> {
+  ): Observable<ResultadosBusquedaDto> {
 
     // 1. Construimos los parámetros base según la documentación v1
     // El signo '-' delante del campo en _sort indica orden descendente
@@ -66,8 +67,8 @@ export class GestionTicketsService {
       // Si quieres buscar en el título (ajusta 'ticket_title' al nombre de tu campo)
       params = params.set('ticket_title:contains', filtro.ticket_title);
     }
-    if (filtro.status_type) {
-      params = params.set('status_type', filtro.status_type);
+    if (filtro.status_type_id) {
+      params = params.set('status_type_id', filtro.status_type_id);
     }
     if (filtro.priority_level) {
       params = params.set('priority_level', filtro.priority_level);
@@ -78,8 +79,7 @@ export class GestionTicketsService {
     console.log('URL de consulta:', `${TICKET_API.list()}?${params.toString()}`);
 
     // 3. Tipamos la respuesta para poder extraer 'data' con seguridad
-    return this.http.get<{ data: TicketDTO[] }>(TICKET_API.list(), { params }).pipe(
-      map(response => response.data), // Extraemos el array de la propiedad 'data'
+    return this.http.get<ResultadosBusquedaDto>(TICKET_API.list(), { params }).pipe(
       tap(tickets => console.log('Tickets recibidos con éxito:', tickets))
     );
   }

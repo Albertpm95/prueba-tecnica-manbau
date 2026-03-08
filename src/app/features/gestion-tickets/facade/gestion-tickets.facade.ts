@@ -7,6 +7,7 @@ import { TicketFilters } from "../models/ticket-filter";
 import { TicketState } from "../models/ticket.state";
 import { Ticket } from "../models/ticket.model";
 import { TicketDTO } from "../dtos/ticket.dto";
+import { ResultadosBusquedaDto } from "../dtos/resultados-busqueda.dto";
 
 @Injectable()
 export class GestionTicketsFacade {
@@ -87,7 +88,7 @@ export class GestionTicketsFacade {
         state.sortDirection.toUpperCase() as 'ASC' | 'DESC',
       )
       .pipe(
-        tap((response: TicketDTO[]) => {
+        tap((response: ResultadosBusquedaDto) => {
           this.updateCacheState(pageNumber, response);
         }),
         catchError((err) => {
@@ -100,7 +101,8 @@ export class GestionTicketsFacade {
       .subscribe();
   }
 
-  private updateCacheState(pageNumber: number, ticketsListDTO: TicketDTO[]) {
+  private updateCacheState(pageNumber: number, response: ResultadosBusquedaDto) {
+    const ticketsListDTO = response.data ?? [];
     const newMappedPage = ticketsListDTO.map(dto => mapTicketDtoToModel(dto));
     this.listState.update((s: TicketState): TicketState => {
       const newCache = new Map(s.cachedPagesItems);
@@ -122,6 +124,8 @@ export class GestionTicketsFacade {
         ...s,
         currentPageItems: newMappedPage,
         cachedPagesItems: newCache,
+        totalPages: response.items,
+        pageSize: response.items,
       };
     });
   }
