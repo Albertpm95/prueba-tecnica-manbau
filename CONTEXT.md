@@ -21,6 +21,10 @@
 - **Frontend (TS, Variables, Models, Componentes):** Usar siempre `camelCase`.
 - **Mappers:** Es obligatorio transformar cada respuesta del "backend" de snake a camel.
 
+## Calidad y CI/CD
+- **Git Hooks:** Husky + lint-staged para formateo automático (Prettier) y Linting (ESLint) en cada commit.
+- **CI:** GitHub Actions para validar builds en cada push.
+
 ## Tecnologías y Librerías
 - **Internacionalización:** `ngx-translate` (usar pipe `| translate` en plantillas).
 - **Feedback Visual:** - `ngx-spinner` para estados de carga.
