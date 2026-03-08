@@ -50,5 +50,17 @@
     { "id": 101, "full_name": "Alan Turing", "user_role": "Senior Dev", "username": "alan", "password": "admin" },
     { "id": 102, "full_name": "Ada Lovelace", "user_role": "UI Designer", "username": "ada", "password": "admin" },
     { "id": 103, "full_name": "Linus Torvalds", "user_role": "SysAdmin", "username": "linus", "password": "admin" }
+  ],
+  "ticket_statuses": [
+    { "id": 1, "label": "Open" },
+    { "id": 2, "label": "In Progress" },
+    { "id": 3, "label": "Resolved" },
+    { "id": 4, "label": "Closed" }
+  ],
+  "priorities": [
+    { "id": 1, "label": "Crítico" },
+    { "id": 2, "label": "Alto" },
+    { "id": 3, "label": "Medio" },
+    { "id": 4, "label": "Bajo" }
   ]
 }

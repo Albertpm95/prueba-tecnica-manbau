@@ -1,4 +1,4 @@
-import { UserDTO } from '../../shared/dtos/user-dto';
+import { UserDTO } from '../../shared/dtos/user.dto';
 import { User } from '../../shared/models/user';
 
 export class UserMapper {

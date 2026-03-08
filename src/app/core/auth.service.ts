@@ -1,7 +1,7 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { User } from '../shared/models/user';
-import { UserDTO } from '../shared/dtos/user-dto';
+import { UserDTO } from '../shared/dtos/user.dto';
 import { UserMapper } from './mappers/user.mapper';
 import { HttpClient } from '@angular/common/http';
 
