@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from "@angular/core";
+import { Injectable, inject, signal, computed } from "@angular/core";
 import { take, map, tap, catchError, finalize, of } from "rxjs";
 import { GestionTicketsService } from "../core/services/gestion-tickets.service";
 import { mapTicketDtoToModel } from "../mappers/ticket.mapper";
@@ -21,13 +21,14 @@ export class GestionTicketsFacade {
     currentPageItems: [],
     cachedPagesItems: new Map(),
     currentPage: 1,
+    totalPages: 1,
     pageSize: 10,
     filters: {},
     sort: 'id',
     sortDirection: 'asc',
     mensajeError: '',
   });
-  private readonly MAX_PAGES_CACHED = 4; 
+  private readonly MAX_PAGES_CACHED = 4;
 
   public readonly detallesTicketState = signal<Ticket | undefined>(undefined);
 
@@ -47,11 +48,11 @@ export class GestionTicketsFacade {
     }));
     this.buscarTickets();
   }
-  public setPagination(pagination: PaginationInfo): void {
+  public setPagination(pagination: Partial<PaginationInfo>): void {
     this.listState.update(state => ({
       ...state,
-      currentPage: pagination.currentPage,
-      pageSize: pagination.pageSize
+      currentPage: pagination.currentPage?? 1,
+      pageSize: pagination.pageSize?? 10
     }));
     this.buscarTickets();
   }

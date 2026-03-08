@@ -1,10 +1,10 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
-import { CatalogoDTO } from '../../../../shared/dtos/base.dto';
 import { TicketDTO } from '../../dtos/ticket.dto';
 import { CATALOGOS_API, TICKET_API } from '../api/ticket.api';
 import { TicketFilters } from '../../models/ticket-filter';
+import { CatalogoDTO } from '../../../../shared/dtos/catalogo.dto';
 
 @Injectable({
   providedIn: 'root'

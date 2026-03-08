@@ -8,6 +8,7 @@ export interface TicketState {
 
   // Paginación
   currentPage: number;
+  totalPages: number;
   pageSize: number;
 
   // Filtros y Ordenación
