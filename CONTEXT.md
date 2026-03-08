@@ -39,10 +39,14 @@
   - **`public`**: Obligatorio para todo lo que se consuma desde el HTML (template).
   - **`private`**: Obligatorio para lógica interna, servicios inyectados y helpers que no se usen en el template.
 - **Tipado Estricto:** Evitar el uso de `any`. Definir interfaces para todo (usar la carpeta `models` y `dtos`).
-- **Arquitectura de Archivos de Componentes:**
-  - **Componentes Sencillos (< 100 líneas):** Usar `template` y `styles` (o Tailwind clases) **inline** dentro del decorador `@Component`. Mantener todo en un único archivo `.ts`.
-  - **Componentes Complejos (> 100 líneas):** Separar en archivos externos (`.html`, `.scss`).
 - **Estilos:** Priorizar clases de Tailwind CSS incluso en estilos inline para mantener consistencia.
+- **Mappers:** Preferir funciones puras exportadas en lugar de clases con métodos estáticos para la transformación de DTOs a Modelos.
+- **Transformación:** Realizar conversiones de tipos (ej. string a Date) dentro del mapper para que el resto de la app trabaje con tipos nativos. El backend utiliza timestamp en UTC.
+- **Forms:** Prohibido usar Template-driven Forms (ngModel). 
+  - Usar exclusivamente **Reactive Forms** tipados.
+  - Inyectar `FormBuilder` mediante `inject(FormBuilder)`.
+  - Vincular valores de formularios a **Signals** mediante `valueChanges` cuando sea necesario para la UI.
+
 
 - **Consumo de Datos en el Template:**
   - Prohibido llamar a métodos de servicios directamente en las expresiones del template (ej. `{{ service.getData() }}`).
