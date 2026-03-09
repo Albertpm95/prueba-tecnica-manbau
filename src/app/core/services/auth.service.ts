@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, delay, map } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { UserDTO } from 'app/shared/dtos/user.dto';
 import { UserDTOtoModel } from 'app/shared/mappers/user.mapper';
