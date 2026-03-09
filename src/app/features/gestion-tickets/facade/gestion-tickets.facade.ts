@@ -1,13 +1,12 @@
-import { Injectable, inject, signal, computed } from "@angular/core";
-import { take, map, tap, catchError, finalize, of, Observable } from "rxjs";
-import { GestionTicketsService } from "../core/services/gestion-tickets.service";
-import { mapTicketDtoToModel, mapTicketFiltersModelToDto } from "../mappers/ticket.mapper";
-import { PaginationInfo } from "../models/pagination";
-import { TicketFilters } from "../models/ticket-filter";
-import { TicketState } from "../models/ticket.state";
-import { Ticket } from "../models/ticket.model";
-import { TicketDTO } from "../dtos/ticket.dto";
-import { ResultadosBusquedaDto } from "../dtos/resultados-busqueda.dto";
+import { Injectable, inject, signal } from '@angular/core';
+import { take, map, tap, catchError, finalize, of, Observable } from 'rxjs';
+import { GestionTicketsService } from '../core/services/gestion-tickets.service';
+import { mapTicketDtoToModel, mapTicketFiltersModelToDto } from '../mappers/ticket.mapper';
+import { PaginationInfo } from '../models/pagination';
+import { TicketFilters } from '../models/ticket-filter';
+import { TicketState } from '../models/ticket.state';
+import { Ticket } from '../models/ticket.model';
+import { ResultadosBusquedaDto } from '../dtos/resultados-busqueda.dto';
 
 @Injectable()
 export class GestionTicketsFacade {
@@ -43,25 +42,30 @@ export class GestionTicketsFacade {
   }
 
   public setFilters(filters: TicketFilters): void {
-    this.listState.update(state => ({
+    this.listState.update((state) => ({
       ...state,
       filters,
       cachedPagesItems: new Map(),
-      currentPage: 1 // Reiniciamos a la primera página al cambiar filtros
+      currentPage: 1, // Reiniciamos a la primera página al cambiar filtros
     }));
     this.buscarTickets();
   }
   public setPagination(pagination: Partial<PaginationInfo>): void {
-    this.listState.update(state => ({
+    this.listState.update((state) => ({
       ...state,
-      currentPage: pagination.currentPage?? 1,
+      currentPage: pagination.currentPage ?? 1,
       cachedPagesItems: new Map(),
-      pageSize: pagination.pageSize?? 10
+      pageSize: pagination.pageSize ?? 10,
     }));
     this.buscarTickets();
   }
   public buscarTickets() {
-    console.log('Buscando tickets con filtros:', this.listState().filters, 'página:', this.listState().currentPage);
+    console.log(
+      'Buscando tickets con filtros:',
+      this.listState().filters,
+      'página:',
+      this.listState().currentPage,
+    );
     const state = this.listState();
     const pageNumber = state.currentPage;
 
@@ -104,7 +108,7 @@ export class GestionTicketsFacade {
 
   private updateCacheState(pageNumber: number, response: ResultadosBusquedaDto) {
     const ticketsListDTO = response.data ?? [];
-    const newMappedPage = ticketsListDTO.map(dto => mapTicketDtoToModel(dto));
+    const newMappedPage = ticketsListDTO.map((dto) => mapTicketDtoToModel(dto));
     this.listState.update((s: TicketState): TicketState => {
       const newCache = new Map(s.cachedPagesItems);
       newCache.set(pageNumber, { items: newMappedPage, lastAccess: Date.now() });
@@ -130,8 +134,15 @@ export class GestionTicketsFacade {
       };
     });
   }
-  public abrirDetalles(id: number){
-    this.service.getTicketById(id).pipe(map(dto => mapTicketDtoToModel(dto)), tap(ticket => this.detallesTicketState.set(ticket)), take(1)).subscribe();
+  public abrirDetalles(id: number) {
+    this.service
+      .getTicketById(id)
+      .pipe(
+        map((dto) => mapTicketDtoToModel(dto)),
+        tap((ticket) => this.detallesTicketState.set(ticket)),
+        take(1),
+      )
+      .subscribe();
   }
   public crearTicket(ticket: Partial<Ticket>): Observable<unknown> {
     return this.service.createTicket(ticket);

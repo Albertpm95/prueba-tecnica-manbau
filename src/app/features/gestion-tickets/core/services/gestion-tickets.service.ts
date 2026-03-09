@@ -1,14 +1,14 @@
-import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable, of, tap } from 'rxjs';
+import { CatalogoDTO } from 'app/shared/dtos/catalogo.dto';
+import { UserDTO } from 'app/shared/dtos/user.dto';
+import { Observable, of, tap } from 'rxjs';
+import { ResultadosBusquedaDto } from '../../dtos/resultados-busqueda.dto';
 import { TicketDTO } from '../../dtos/ticket.dto';
 import { CATALOGOS_API, TICKET_API, USERS_API } from '../api/ticket.api';
-import { CatalogoDTO } from '../../../../shared/dtos/catalogo.dto';
-import { ResultadosBusquedaDto } from '../../dtos/resultados-busqueda.dto';
-import { UserDTO } from 'shared/dtos/user.dto';
+import { Injectable, inject, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GestionTicketsService {
   private http = inject(HttpClient);
@@ -27,9 +27,9 @@ export class GestionTicketsService {
       return of(this._catalogoEstados());
     }
     return this.http.get<CatalogoDTO[]>(CATALOGOS_API.estados()).pipe(
-      tap(dtos => {
+      tap((dtos) => {
         this._catalogoEstados.set(dtos);
-      })
+      }),
     );
   }
 
@@ -38,9 +38,9 @@ export class GestionTicketsService {
       return of(this._catalogoPrioridades());
     }
     return this.http.get<CatalogoDTO[]>(CATALOGOS_API.prioridades()).pipe(
-      tap(dtos => {
+      tap((dtos) => {
         this._catalogoPrioridades.set(dtos);
-      })
+      }),
     );
   }
   public getUsuarios(): Observable<UserDTO[]> {
@@ -48,8 +48,10 @@ export class GestionTicketsService {
       return of(this._usuarios());
     }
     return this.http.get<UserDTO[]>(`${CATALOGOS_API.base}/users`).pipe(
-      tap(dtos => { this._usuarios.set(dtos); })
-    )
+      tap((dtos) => {
+        this._usuarios.set(dtos);
+      }),
+    );
   }
 
   public getTicketById(id: number): Observable<TicketDTO> {
@@ -57,11 +59,11 @@ export class GestionTicketsService {
   }
 
   public createUsuario(user: Partial<UserDTO>): Observable<unknown> {
-    return this.http.post<UserDTO>(USERS_API.create(), user)
+    return this.http.post<UserDTO>(USERS_API.create(), user);
   }
 
   public updateUsuario(user: Partial<UserDTO>): Observable<unknown> {
-    return this.http.patch<UserDTO>(USERS_API.create(), user)
+    return this.http.patch<UserDTO>(USERS_API.create(), user);
   }
 
   public getTickets(
@@ -69,9 +71,8 @@ export class GestionTicketsService {
     pageSize: number,
     filtro: Partial<TicketDTO>,
     sort: string,
-    order: 'ASC' | 'DESC'
+    order: 'ASC' | 'DESC',
   ): Observable<ResultadosBusquedaDto> {
-
     // 1. Construimos los parámetros base según la documentación v1
     // El signo '-' delante del campo en _sort indica orden descendente
     const sortParam = order === 'DESC' ? `-${sort}` : sort;
@@ -98,17 +99,17 @@ export class GestionTicketsService {
     console.log('URL de consulta:', `${TICKET_API.list()}?${params.toString()}`);
 
     // 3. Tipamos la respuesta para poder extraer 'data' con seguridad
-    return this.http.get<ResultadosBusquedaDto>(TICKET_API.list(), { params }).pipe(
-      tap(tickets => console.log('Tickets recibidos con éxito:', tickets))
-    );
+    return this.http
+      .get<ResultadosBusquedaDto>(TICKET_API.list(), { params })
+      .pipe(tap((tickets) => console.log('Tickets recibidos con éxito:', tickets)));
   }
 
   public createTicket(ticket: Partial<TicketDTO>): Observable<unknown> {
-    return this.http.post<TicketDTO>(TICKET_API.create(), ticket)
+    return this.http.post<TicketDTO>(TICKET_API.create(), ticket);
   }
 
   public updateTicket(ticket: Partial<TicketDTO>): Observable<unknown> {
     if (!ticket.id) throw new Error('El ID del ticket es requerido para actualizar');
-    return this.http.patch<TicketDTO>(TICKET_API.update(ticket.id), ticket)
+    return this.http.patch<TicketDTO>(TICKET_API.update(ticket.id), ticket);
   }
 }
