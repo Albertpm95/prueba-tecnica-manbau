@@ -29,7 +29,7 @@ export class AuthService {
           this.currentUserSignal.set(mappedUser);
           sessionStorage.setItem('access_token', userDto.token);
           this.toastrService.show('Login exitoso', 'success');
-          this.router.navigate(['']);
+          this.router.navigate(['gestion-tickets']);
           return true;
         }
         this.toastrService.show('Credenciales incorrectas', 'error');
@@ -45,6 +45,7 @@ export class AuthService {
 
   public hasRole(): boolean {
     const user = this.currentUser();
+    console.log('Verificando rol del usuario:', user); // Debug: Ver el usuario actual
     return !!user?.userRole;
   }
 }

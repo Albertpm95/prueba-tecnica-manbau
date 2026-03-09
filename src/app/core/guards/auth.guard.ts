@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+// core/guards/auth.guard.ts
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate {
+export const authGuard: CanActivateFn = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  constructor(private authService: AuthService) {}
-
-  canActivate(): boolean {
-    return this.authService.hasRole();
+  if (authService.hasRole()) {
+    return true;
   }
-}
+
+  // Si no tiene rol, redirigimos a login usando el Router de Angular
+  // Esto evita que la app se quede en un limbo y recargue
+  return router.parseUrl('');
+};
