@@ -8,6 +8,7 @@ import { UserDTOtoModel } from 'app/shared/mappers/user.mapper';
 import { Ticket } from 'app/features/gestion-tickets/models/ticket.model';
 import { ToastrService } from 'app/core/services/toastr.service';
 import { TicketDTO } from 'app/features/gestion-tickets/dtos/ticket.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-tickets',
@@ -19,6 +20,7 @@ import { TicketDTO } from 'app/features/gestion-tickets/dtos/ticket.dto';
 export class DetailTicketsComponent {
   private facade = inject(GestionTicketsFacade);
   private toastrService = inject(ToastrService);
+  private router = inject(Router);
 
   public readonly ticketDetails = this.facade.detallesTicketState;
   private updatedTicket: { values: Ticket; valid: boolean } | undefined;
@@ -100,5 +102,9 @@ export class DetailTicketsComponent {
         });
       }
     }
+  }
+
+  volverListado() {
+    this.router.navigate(['gestion-tickets']);
   }
 }
