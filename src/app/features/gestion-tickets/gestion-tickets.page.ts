@@ -1,8 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListaTicketsComponent } from './components/smart/lista-tickets/lista-tickets.component';
 import { GestionTicketsFacade } from './facade/gestion-tickets.facade';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/internal/operators/take';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'page-gestion-tickets',
@@ -17,7 +19,11 @@ import { Router } from '@angular/router';
       >
         Nuevo Ticket
       </button>
-      <app-lista-tickets></app-lista-tickets>
+      @if (cargando()) {
+        <p>Cargando...</p>
+      } @else {
+        <app-lista-tickets></app-lista-tickets>
+      }
     </div>
   `,
   styles: [
@@ -32,8 +38,15 @@ import { Router } from '@angular/router';
 export class GestionTicketsPage {
   private facade = inject(GestionTicketsFacade);
   private readonly router = inject(Router);
+  public cargando = signal<boolean>(true);
   ngOnInit(): void {
-    this.facade.loadCatalogos();
+    this.facade
+      .loadCatalogos()
+      .pipe(
+        finalize(() => this.cargando.set(false)),
+        take(1),
+      )
+      .subscribe();
   }
   public nuevoTicket(): void {
     this.router.navigate(['detalle']);

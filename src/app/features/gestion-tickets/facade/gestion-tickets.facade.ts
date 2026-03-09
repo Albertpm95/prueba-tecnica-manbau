@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { take, map, tap, catchError, finalize, of, Observable } from 'rxjs';
+import { take, map, tap, catchError, finalize, of, Observable, forkJoin } from 'rxjs';
 import { GestionTicketsService } from '../core/services/gestion-tickets.service';
 import { mapTicketDtoToModel, mapTicketFiltersModelToDto } from '../mappers/ticket.mapper';
 import { PaginationInfo } from '../models/pagination';
@@ -35,10 +35,13 @@ export class GestionTicketsFacade {
 
   readonly loading = signal(false);
 
-  public loadCatalogos(): void {
+  public loadCatalogos() {
     // Disparamos la carga. El tap del servicio actualizará los signals.
-    this.service.getCatalogoEstados().subscribe();
-    this.service.getCatalogoPrioridades().subscribe();
+    this.loading.set(true);
+    return forkJoin({
+      estados: this.service.getCatalogoEstados(),
+      prioridades: this.service.getCatalogoPrioridades(),
+    }).pipe(finalize(() => this.loading.set(false)));
   }
 
   public setFilters(filters: TicketFilters): void {
