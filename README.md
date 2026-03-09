@@ -26,7 +26,7 @@ husky y lint-staged
 
 Yo he utilizado pnpm para instalar y arrancar en servidor, pero npm deberia funcionar igual
 
-- Mock Server: `pnpm exec json-server --watch db.json --port 3000 --delay 500` o con npm: `xxxxx` 
+- Mock Server: `pnpm exec json-server --watch db.json --port 3000 --delay 500`. Con npm deberia ser `npm run json-server --watch db.json --port 3000 --delay 500`
 
 - ng serve para arrancar el frontal en local
 

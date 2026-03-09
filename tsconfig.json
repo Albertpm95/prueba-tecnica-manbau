@@ -14,12 +14,19 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
-    "baseUrl": "src/app",
+    "baseUrl": "src",
     "paths": {
-      "@env/*": ["src/environments/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@core/*": ["src/app/core/*"],
-      "@features/*": ["src/app/features/*"]
+      "@env/*": ["src/app/environments/*"],
+      //"@shared/*": ["src/app/shared/*"],
+      "@guards/*": ["src/app/shared/*"],
+      "@interceptors/*": ["src/app/shared/*"],
+      "@core-services/*": ["src/app/shared/*"],
+      //"@core/*": ["src/app/core/*"],
+      "@shared-components/*": ["src/app/core/*"],
+      "@dtos/*": ["src/app/core/*"],
+      "@models/*": ["src/app/core/*"],
+      "@mappers/*": ["src/app/core/*"],
+      "@features/*": ["src/app/features/*"],
     }
   },
   "angularCompilerOptions": {
