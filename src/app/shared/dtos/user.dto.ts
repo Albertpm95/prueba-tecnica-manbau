@@ -4,4 +4,5 @@ export interface UserDTO {
   user_role: string;
   password: string;
   username: string;
+  token: string;
 }
