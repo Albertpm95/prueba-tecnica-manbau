@@ -26,7 +26,6 @@
 ### Componentes de Navegación/Estado
 - Los componentes de autenticación en el header (Avatar/Login) residen en `layout`.
 - El estado de la sesión se consume desde `core/services/auth.service`.
-- Usar `ngx-translate` para los textos "Iniciar Sesión" y "Salir".
 
 
 ## Convenciones de Nomenclatura
@@ -58,9 +57,6 @@
 - **CI:** GitHub Actions para validar builds en cada push.
 
 ## Tecnologías y Librerías
-- **Internacionalización:** `ngx-translate` (usar pipe `| translate` en plantillas).
-- **Feedback Visual:** - `ngx-spinner` para estados de carga.
-  - `ngx-toastr` para notificaciones de éxito/error.
 - **Mock Backend:** `json-server` sobre el archivo `db.json`.
 
 ## Comandos rápidos
