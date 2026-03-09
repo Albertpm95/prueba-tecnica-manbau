@@ -11,24 +11,31 @@ import { Router } from '@angular/router';
   template: `
     <div>
       <h1>Gestión de Tickets</h1>
-      <button (click)="nuevoTicket()">Nuevo Ticket</button>
+      <button
+        class="rounded border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 shadow-sm"
+        (click)="nuevoTicket()"
+      >
+        Nuevo Ticket
+      </button>
       <app-lista-tickets></app-lista-tickets>
     </div>
   `,
-  styles: [`
-    div {
-      padding: 1rem;
-    }
-  `],
-  providers: [GestionTicketsFacade]
+  styles: [
+    `
+      div {
+        padding: 1rem;
+      }
+    `,
+  ],
+  providers: [GestionTicketsFacade],
 })
 export class GestionTicketsPage {
   private facade = inject(GestionTicketsFacade);
-  private readonly router = inject(Router)
+  private readonly router = inject(Router);
   ngOnInit(): void {
-    this.facade.loadCatalogos()
+    this.facade.loadCatalogos();
   }
   public nuevoTicket(): void {
-    this.router.navigate(['/gestion-tickets/detalle']);
+    this.router.navigate(['detalle']);
   }
 }
