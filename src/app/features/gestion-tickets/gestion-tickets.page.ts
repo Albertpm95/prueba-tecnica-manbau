@@ -49,6 +49,6 @@ export class GestionTicketsPage {
       .subscribe();
   }
   public nuevoTicket(): void {
-    this.router.navigate(['detalle']);
+    this.router.navigate(['/gestion-tickets/detalle', 'nuevo']);
   }
 }
