@@ -547,21 +547,24 @@
       "full_name": "Alan Turing",
       "user_role": "Senior Dev",
       "username": "alan",
-      "password": "admin"
+      "password": "admin",
+      "token": "token_falso_alan"
     },
     {
       "id": "102",
       "full_name": "Ada Lovelace",
       "user_role": "UI Designer",
       "username": "ada",
-      "password": "admin"
+      "password": "admin",
+      "token": "token_falso_alan"
     },
     {
       "id": "103",
       "full_name": "Linus Torvalds",
       "user_role": "SysAdmin",
       "username": "linus",
-      "password": "admin"
+      "password": "admin",
+      "token": "token_falso_alan"
     }
   ],
   "estados": [
