@@ -1,17 +1,24 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { take, map, tap, catchError, finalize, of, Observable, forkJoin } from 'rxjs';
 import { GestionTicketsService } from '../core/services/gestion-tickets.service';
-import { mapTicketDtoToModel, mapTicketFiltersModelToDto } from '../mappers/ticket.mapper';
+import {
+  mapTicketDtoToModel,
+  mapTicketFiltersModelToDto,
+  mapTicketModelToDto,
+} from '../mappers/ticket.mapper';
 import { PaginationInfo } from '../models/pagination';
 import { TicketFilters } from '../models/ticket-filter';
 import { TicketState } from '../models/ticket.state';
 import { Ticket } from '../models/ticket.model';
 import { ResultadosBusquedaDto } from '../dtos/resultados-busqueda.dto';
 import { UserDTOtoModel } from 'app/shared/mappers/user.mapper';
+import { TicketDTO } from '../dtos/ticket.dto';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class GestionTicketsFacade {
   private readonly service = inject(GestionTicketsService);
+  private readonly router = inject(Router);
 
   // Exponemos los signals de solo lectura del servicio
   public readonly estados = this.service.estados;
@@ -147,12 +154,16 @@ export class GestionTicketsFacade {
         tap((ticket) => this.detallesTicketState.set(ticket)),
         take(1),
       )
-      .subscribe();
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/gestion-tickets', 'detalle', id]);
+        },
+      });
   }
-  public crearTicket(ticket: Partial<Ticket>): Observable<unknown> {
-    return this.service.createTicket(ticket);
+  public crearTicket(ticket: Partial<Ticket>): Observable<TicketDTO> {
+    return this.service.createTicket(mapTicketModelToDto(ticket));
   }
-  public actualizarTicket(ticket: Partial<Ticket>): Observable<unknown> {
-    return this.service.updateTicket(ticket);
+  public actualizarTicket(ticket: Partial<Ticket>): Observable<TicketDTO> {
+    return this.service.updateTicket(mapTicketModelToDto(ticket));
   }
 }

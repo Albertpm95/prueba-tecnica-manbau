@@ -1,5 +1,5 @@
 export interface Ticket {
-  id: number;
+  id?: number;
   ticketTitle: string;
   ticketDescription: string;
   statusType: string;

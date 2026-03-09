@@ -8,14 +8,15 @@
         <label [for]="control.nombre" class="text-sm font-semibold text-gray-700">
           {{ control.label }}
         </label>
-
+        {{ isReadOnly() ? 'Modo solo lectura' : 'Modo edición' }} - {{ control.tipo }} -
+        {{ control.nombre }} {{ control.readonly ? '(readonly)' : '' }}
         @switch (control.tipo) {
           @case ('input') {
             <input
               [id]="control.nombre"
               [formControlName]="control.nombre"
               [placeholder]="control.placeholder || ''"
-              [readonly]="isReadOnly || control.readonly"
+              [readonly]="isReadOnly() || control.readonly"
               class="w-full rounded-md border border-gray-300 p-2 text-sm transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none read-only:bg-gray-50 read-only:text-gray-500"
             />
           }
@@ -38,7 +39,7 @@
               [id]="control.nombre"
               [formControlName]="control.nombre"
               [placeholder]="control.placeholder || ''"
-              [readonly]="isReadOnly || control.readonly"
+              [readonly]="isReadOnly() || control.readonly"
               rows="3"
               class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none read-only:bg-gray-50"
             ></textarea>

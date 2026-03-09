@@ -1,5 +1,5 @@
 export interface TicketDTO {
-  id: number;
+  id?: number;
   ticket_title: string;
   ticket_description: string;
   status_type_id: string;

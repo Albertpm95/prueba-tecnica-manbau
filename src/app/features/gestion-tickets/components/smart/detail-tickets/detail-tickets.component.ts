@@ -5,6 +5,9 @@ import { GestionTicketsFacade } from 'app/features/gestion-tickets/facade/gestio
 import { FormularioEscrituraComponent } from 'app/shared/components/formulario/formulario-escritura.component';
 import { ConfigFormulario } from 'app/shared/models/config-formulario';
 import { UserDTOtoModel } from 'app/shared/mappers/user.mapper';
+import { Ticket } from 'app/features/gestion-tickets/models/ticket.model';
+import { ToastrService } from 'app/core/services/toastr.service';
+import { TicketDTO } from 'app/features/gestion-tickets/dtos/ticket.dto';
 
 @Component({
   selector: 'app-detail-tickets',
@@ -15,9 +18,10 @@ import { UserDTOtoModel } from 'app/shared/mappers/user.mapper';
 })
 export class DetailTicketsComponent {
   private facade = inject(GestionTicketsFacade);
+  private toastrService = inject(ToastrService);
 
   public readonly ticketDetails = this.facade.detallesTicketState;
-
+  private updatedTicket: { values: Ticket; valid: boolean } | undefined;
   public idTicket = input<number>();
   public configForm = computed<ConfigFormulario>(() => {
     const prioridades = this.facade.prioridades();
@@ -61,6 +65,7 @@ export class DetailTicketsComponent {
           opciones: estados,
         },
         {
+          oculto: true,
           nombre: 'createdAt',
           label: 'Fecha de creación',
           tipo: 'input',
@@ -74,10 +79,26 @@ export class DetailTicketsComponent {
     this.facade.loadCatalogos().subscribe(() => {});
   }
 
-  setValueForms($event: { values: any; valid: boolean }) {
+  setValueForms($event: { values: Ticket; valid: boolean }) {
     console.log('Valores del formulario:', $event.values);
     console.log('¿El formulario es válido?', $event.valid);
     // Aquí puedes agregar lógica adicional para manejar los cambios en el formulario
+    this.updatedTicket = $event;
   }
-  guardarCambios() {}
+  guardarCambios() {
+    if (this.updatedTicket && this.updatedTicket.valid) {
+      if (this.updatedTicket.values.id) {
+        this.facade.actualizarTicket(this.updatedTicket.values).subscribe((ticket: TicketDTO) => {
+          this.toastrService.show('Ticket actualizado con éxito', 'success');
+          if (ticket?.id) this.facade.abrirDetalles(ticket.id);
+        });
+      } else {
+        delete this.updatedTicket.values.id; // Aseguramos que no se envíe un ID al crear
+        this.facade.crearTicket(this.updatedTicket.values).subscribe((ticket: TicketDTO) => {
+          this.toastrService.show('Ticket creado con éxito', 'success');
+          if (ticket?.id) this.facade.abrirDetalles(ticket.id);
+        });
+      }
+    }
+  }
 }

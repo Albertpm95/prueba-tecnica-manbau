@@ -104,11 +104,11 @@ export class GestionTicketsService {
       .pipe(tap((tickets) => console.log('Tickets recibidos con éxito:', tickets)));
   }
 
-  public createTicket(ticket: Partial<TicketDTO>): Observable<unknown> {
+  public createTicket(ticket: Partial<TicketDTO>): Observable<TicketDTO> {
     return this.http.post<TicketDTO>(TICKET_API.create(), ticket);
   }
 
-  public updateTicket(ticket: Partial<TicketDTO>): Observable<unknown> {
+  public updateTicket(ticket: Partial<TicketDTO>): Observable<TicketDTO> {
     if (!ticket.id) throw new Error('El ID del ticket es requerido para actualizar');
     return this.http.patch<TicketDTO>(TICKET_API.update(ticket.id), ticket);
   }
