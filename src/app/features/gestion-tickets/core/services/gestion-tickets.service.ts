@@ -2,9 +2,10 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable, of, tap } from 'rxjs';
 import { TicketDTO } from '../../dtos/ticket.dto';
-import { CATALOGOS_API, TICKET_API } from '../api/ticket.api';
+import { CATALOGOS_API, TICKET_API, USERS_API } from '../api/ticket.api';
 import { CatalogoDTO } from '../../../../shared/dtos/catalogo.dto';
 import { ResultadosBusquedaDto } from '../../dtos/resultados-busqueda.dto';
+import { UserDTO } from 'shared/dtos/user.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,13 @@ export class GestionTicketsService {
   private http = inject(HttpClient);
   private readonly _catalogoEstados = signal<CatalogoDTO[]>([]);
   private readonly _catalogoPrioridades = signal<CatalogoDTO[]>([]);
+  private readonly _usuarios = signal<UserDTO[]>([]);
 
   // 2. Públicos y READONLY para el Facade y componentes
   // Al usar .asReadonly(), el compilador impide usar .set() o .update() fuera de aquí
   public readonly estados = this._catalogoEstados.asReadonly();
   public readonly prioridades = this._catalogoPrioridades.asReadonly();
+  public readonly usuarios = this._usuarios.asReadonly();
 
   public getCatalogoEstados(): Observable<CatalogoDTO[]> {
     if (this._catalogoEstados().length > 0) {
@@ -40,9 +43,25 @@ export class GestionTicketsService {
       })
     );
   }
+  public getUsuarios(): Observable<UserDTO[]> {
+    if (this._usuarios().length > 0) {
+      return of(this._usuarios());
+    }
+    return this.http.get<UserDTO[]>(`${CATALOGOS_API.base}/users`).pipe(
+      tap(dtos => { this._usuarios.set(dtos); })
+    )
+  }
 
   public getTicketById(id: number): Observable<TicketDTO> {
     return this.http.get<TicketDTO>(TICKET_API.detail(id));
+  }
+
+  public createUsuario(user: Partial<UserDTO>): Observable<unknown> {
+    return this.http.post<UserDTO>(USERS_API.create(), user)
+  }
+
+  public updateUsuario(user: Partial<UserDTO>): Observable<unknown> {
+    return this.http.patch<UserDTO>(USERS_API.create(), user)
   }
 
   public getTickets(
@@ -82,5 +101,14 @@ export class GestionTicketsService {
     return this.http.get<ResultadosBusquedaDto>(TICKET_API.list(), { params }).pipe(
       tap(tickets => console.log('Tickets recibidos con éxito:', tickets))
     );
+  }
+
+  public createTicket(ticket: Partial<TicketDTO>): Observable<unknown> {
+    return this.http.post<TicketDTO>(TICKET_API.create(), ticket)
+  }
+
+  public updateTicket(ticket: Partial<TicketDTO>): Observable<unknown> {
+    if (!ticket.id) throw new Error('El ID del ticket es requerido para actualizar');
+    return this.http.patch<TicketDTO>(TICKET_API.update(ticket.id), ticket)
   }
 }

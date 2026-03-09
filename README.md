@@ -7,6 +7,14 @@
  - Gemini para crear y configurar algo de ci/cd y formateo basico con husky y lint-staged
  - Gemini para discutir la creacion de un componente especifico para el layout (usuario)
  - Copilot para la gestion del usuario. 
+ - Copilot para creacion de estructura segun lo planteado en el Context.md
+
+# Paginacion
+He elegido hacerlo en el lado del servidor porque al final la bbdd siempre va a ser mas eficiente con grandes cantidades de datos
+
+# Auth Service recupera y guarda en sessonstorage el token y rol
+# Interceptor inyecta el token en cada peticion
+# Guard comprueba si tiene rol especifico
 
 # Dependencias
 Angualar 21, la version estable mas moderna

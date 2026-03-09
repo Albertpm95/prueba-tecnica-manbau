@@ -1,0 +1,7 @@
+@if (configForm){
+ <app-formulario-escritura [config]="configForm" [values]="ticketDetails()"></app-formulario-escritura>
+}@else {
+    <div>
+        <h2>No se ha podido cargar la configuracion</h2>
+    </div>
+}

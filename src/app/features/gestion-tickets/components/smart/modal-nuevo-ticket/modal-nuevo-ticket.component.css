@@ -1,0 +1,2 @@
+/* Ajustar estilos si se usa Tailwind en global */
+.btn { @apply px-4 py-2 rounded text-white;} 

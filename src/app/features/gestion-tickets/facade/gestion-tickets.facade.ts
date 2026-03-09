@@ -1,5 +1,5 @@
 import { Injectable, inject, signal, computed } from "@angular/core";
-import { take, map, tap, catchError, finalize, of } from "rxjs";
+import { take, map, tap, catchError, finalize, of, Observable } from "rxjs";
 import { GestionTicketsService } from "../core/services/gestion-tickets.service";
 import { mapTicketDtoToModel, mapTicketFiltersModelToDto } from "../mappers/ticket.mapper";
 import { PaginationInfo } from "../models/pagination";
@@ -16,6 +16,7 @@ export class GestionTicketsFacade {
   // Exponemos los signals de solo lectura del servicio
   public readonly estados = this.service.estados;
   public readonly prioridades = this.service.prioridades;
+  public readonly usuarios = this.service.usuarios;
 
   // Objetos cacheados
   public readonly listState = signal<TicketState>({
@@ -130,6 +131,12 @@ export class GestionTicketsFacade {
     });
   }
   public abrirDetalles(id: number){
-    this.service.getTicketById(id).pipe(map(dto => mapTicketDtoToModel(dto)), tap(), take(1)).subscribe();
+    this.service.getTicketById(id).pipe(map(dto => mapTicketDtoToModel(dto)), tap(ticket => this.detallesTicketState.set(ticket)), take(1)).subscribe();
+  }
+  public crearTicket(ticket: Partial<Ticket>): Observable<unknown> {
+    return this.service.createTicket(ticket);
+  }
+  public actualizarTicket(ticket: Partial<Ticket>): Observable<unknown> {
+    return this.service.updateTicket(ticket);
   }
 }
