@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { take, map, tap, catchError, finalize, of, Observable, forkJoin } from 'rxjs';
 import { GestionTicketsService } from '../core/services/gestion-tickets.service';
 import { mapTicketDtoToModel, mapTicketFiltersModelToDto } from '../mappers/ticket.mapper';
@@ -7,6 +7,7 @@ import { TicketFilters } from '../models/ticket-filter';
 import { TicketState } from '../models/ticket.state';
 import { Ticket } from '../models/ticket.model';
 import { ResultadosBusquedaDto } from '../dtos/resultados-busqueda.dto';
+import { UserDTOtoModel } from 'app/shared/mappers/user.mapper';
 
 @Injectable()
 export class GestionTicketsFacade {
@@ -15,7 +16,7 @@ export class GestionTicketsFacade {
   // Exponemos los signals de solo lectura del servicio
   public readonly estados = this.service.estados;
   public readonly prioridades = this.service.prioridades;
-  public readonly usuarios = this.service.usuarios;
+  public readonly usuarios = computed(() => this.service.usuarios().map((u) => UserDTOtoModel(u)));
 
   // Objetos cacheados
   public readonly listState = signal<TicketState>({
@@ -41,6 +42,7 @@ export class GestionTicketsFacade {
     return forkJoin({
       estados: this.service.getCatalogoEstados(),
       prioridades: this.service.getCatalogoPrioridades(),
+      usuarios: this.service.getUsuarios(),
     }).pipe(finalize(() => this.loading.set(false)));
   }
 

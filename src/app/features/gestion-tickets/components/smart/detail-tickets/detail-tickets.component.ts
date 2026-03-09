@@ -1,9 +1,10 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Validators } from '@angular/forms';
 import { GestionTicketsFacade } from 'app/features/gestion-tickets/facade/gestion-tickets.facade';
 import { FormularioEscrituraComponent } from 'app/shared/components/formulario/formulario-escritura.component';
 import { ConfigFormulario } from 'app/shared/models/config-formulario';
+import { UserDTOtoModel } from 'app/shared/mappers/user.mapper';
 
 @Component({
   selector: 'app-detail-tickets',
@@ -18,20 +19,10 @@ export class DetailTicketsComponent {
   public readonly ticketDetails = this.facade.detallesTicketState;
 
   public idTicket = input<number>();
-  public configForm: ConfigFormulario | undefined;
-
-  ngOnInit(): void {
-    console.log('ID del ticket recibido:', this.idTicket());
-    this.configForm = this.crearConfiguracionFormularioEdicion();
-    const id = this.idTicket();
-    if (id) {
-      this.facade.abrirDetalles(id);
-    }
-    console.log('Configuracion del form: ', this.configForm);
-  }
-
-  private crearConfiguracionFormularioEdicion(): ConfigFormulario {
-    console.log('Creando configuración del formulario de edición');
+  public configForm = computed<ConfigFormulario>(() => {
+    const prioridades = this.facade.prioridades();
+    const estados = this.facade.estados();
+    const usuarios = this.facade.usuarios();
     return {
       controles: [
         {
@@ -55,19 +46,19 @@ export class DetailTicketsComponent {
           nombre: 'priorityLevel',
           label: 'Prioridad',
           tipo: 'select',
-          opciones: this.facade.prioridades(),
+          opciones: prioridades,
         },
         {
           nombre: 'assignedUserId',
           label: 'Asignado',
           tipo: 'select',
-          opciones: [],
+          opciones: usuarios.map((u) => ({ id: u.id, label: u.fullName })),
         },
         {
           nombre: 'statusType',
           label: 'Estado',
           tipo: 'select',
-          opciones: this.facade.estados(),
+          opciones: estados,
         },
         {
           nombre: 'createdAt',
@@ -78,5 +69,15 @@ export class DetailTicketsComponent {
       ],
       validators: [],
     };
+  });
+  ngOnInit(): void {
+    this.facade.loadCatalogos().subscribe(() => {});
   }
+
+  setValueForms($event: { values: any; valid: boolean }) {
+    console.log('Valores del formulario:', $event.values);
+    console.log('¿El formulario es válido?', $event.valid);
+    // Aquí puedes agregar lógica adicional para manejar los cambios en el formulario
+  }
+  guardarCambios() {}
 }
