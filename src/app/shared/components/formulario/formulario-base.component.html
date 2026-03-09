@@ -1,27 +1,66 @@
-<form [formGroup]="form()" style="border: solid 1px black;">
+<form
+  [formGroup]="form()"
+  class="grid grid-cols-12 gap-x-6 gap-y-4 rounded-xl border border-gray-200 p-6 shadow-sm bg-white"
+>
   @for (control of config().controles; track control.nombre) {
-  <div [ngClass]="control.columnas || 'col-span-12'">
-    <label>{{ control.label }}</label>
-    @switch (control.tipo) {
-    @case ('input') {
-    <input [formControlName]="control.nombre" [placeholder]="control.placeholder"
-      [readonly]="isReadOnly || control.readonly"> }
-    @case ('select') {
-    <select [formControlName]="control.nombre">
-      <option value="undefined">Seleccione...</option>
-      @for (opt of control.opciones; track opt.id) {
-      <option [value]="opt.id">{{ opt.label }}</option>
-      }
-    </select>
+    @if (!control.oculto) {
+      <div [ngClass]="control.columnas || 'col-span-12'" class="flex flex-col gap-1.5">
+        <label [for]="control.nombre" class="text-sm font-semibold text-gray-700">
+          {{ control.label }}
+        </label>
+
+        @switch (control.tipo) {
+          @case ('input') {
+            <input
+              [id]="control.nombre"
+              [formControlName]="control.nombre"
+              [placeholder]="control.placeholder || ''"
+              [readonly]="isReadOnly || control.readonly"
+              class="w-full rounded-md border border-gray-300 p-2 text-sm transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none read-only:bg-gray-50 read-only:text-gray-500"
+            />
+          }
+
+          @case ('select') {
+            <select
+              [id]="control.nombre"
+              [formControlName]="control.nombre"
+              class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none disabled:bg-gray-50"
+            >
+              <option [ngValue]="null">Seleccione...</option>
+              @for (opt of control.opciones; track opt.id) {
+                <option [value]="opt.id">{{ opt.label }}</option>
+              }
+            </select>
+          }
+
+          @case ('textarea') {
+            <textarea
+              [id]="control.nombre"
+              [formControlName]="control.nombre"
+              [placeholder]="control.placeholder || ''"
+              [readonly]="isReadOnly || control.readonly"
+              rows="3"
+              class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none read-only:bg-gray-50"
+            ></textarea>
+          }
+
+          @case ('checkbox') {
+            <div class="flex items-center gap-2 py-2">
+              <input
+                type="checkbox"
+                [id]="control.nombre"
+                [formControlName]="control.nombre"
+                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <span class="text-sm text-gray-600">Activar</span>
+            </div>
+          }
+        }
+
+        @if (form().get(control.nombre)?.invalid && form().get(control.nombre)?.touched) {
+          <span class="text-xs text-red-500 mt-1">Este campo es requerido o inválido</span>
+        }
+      </div>
     }
-    @case ('textarea') {
-    <textarea [formControlName]="control.nombre" [placeholder]="control.placeholder"
-      [readonly]="isReadOnly || control.readonly"></textarea>
-    }
-    @default {
-    <!-- Para checkbox y radio, agregar más casos si necesario -->
-    }
-    }
-  </div>
   }
 </form>
