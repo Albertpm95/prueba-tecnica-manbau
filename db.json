@@ -593,6 +593,15 @@
       "priority_level": null,
       "created_at": null,
       "assigned_user_id": "102"
+    },
+    {
+      "id": "6f6a",
+      "ticket_title": null,
+      "ticket_description": null,
+      "status_type_id": null,
+      "priority_level_id": "1",
+      "created_at": null,
+      "assigned_user_id": null
     }
   ],
   "users": [

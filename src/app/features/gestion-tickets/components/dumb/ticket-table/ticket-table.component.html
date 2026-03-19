@@ -12,8 +12,8 @@
       @for (ticket of tickets(); track ticket.id) {
         <tr (click)="onRowClick(ticket)">
           <td>{{ ticket.ticketTitle }}</td>
-          <td>{{ ticket.priorityLevel }}</td>
-          <td>{{ ticket.statusType }}</td>
+          <td>{{ ticket.priorityLevel | catalogLabel: 'prioridades' }}</td>
+          <td>{{ ticket.statusType | catalogLabel: 'estados' }}</td>
           <td>{{ ticket.createdAt | date }}</td>
         </tr>
       }

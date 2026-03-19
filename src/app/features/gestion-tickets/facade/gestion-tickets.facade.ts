@@ -6,7 +6,7 @@ import {
   mapTicketFiltersModelToDto,
   mapTicketModelToDto,
 } from '../mappers/ticket.mapper';
-import { PaginationInfo } from '../models/pagination';
+import { PaginationInfo } from '../../../shared/models/pagination';
 import { TicketFilters } from '../models/ticket-filter';
 import { TicketState } from '../models/ticket.state';
 import { Ticket } from '../models/ticket.model';

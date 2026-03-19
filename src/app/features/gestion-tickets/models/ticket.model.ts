@@ -2,8 +2,8 @@ export interface Ticket {
   id?: number;
   ticketTitle: string;
   ticketDescription: string;
-  statusType: string;
-  priorityLevel: string;
+  statusType: number;
+  priorityLevel: number;
   createdAt: number;
   assignedUserId: number;
 }

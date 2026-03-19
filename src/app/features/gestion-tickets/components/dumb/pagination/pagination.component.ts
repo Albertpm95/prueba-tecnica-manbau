@@ -1,7 +1,7 @@
 import { Component, input, output, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { PaginationInfo } from '../../../models/pagination';
+import { PaginationInfo } from '../../../../../shared/models/pagination';
 
 @Component({
   selector: 'app-pagination',
