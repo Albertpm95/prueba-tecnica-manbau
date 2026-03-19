@@ -23,7 +23,6 @@ export class GestionTicketsFacade {
   private readonly catalogService = inject(CatalogoService);
   private readonly router = inject(Router);
 
-  // Exponemos los signals de solo lectura del servicio
   public readonly estados = this.catalogService.estados;
   public readonly prioridades = this.catalogService.prioridades;
   public readonly usuarios = computed(() =>
@@ -49,7 +48,6 @@ export class GestionTicketsFacade {
   readonly loading = signal(false);
 
   public loadCatalogos() {
-    // Disparamos la carga. El tap del servicio actualizará los signals.
     this.loading.set(true);
     return forkJoin({
       estados: this.catalogService.getCatalogoEstados(),
@@ -63,7 +61,7 @@ export class GestionTicketsFacade {
       ...state,
       filters,
       cachedPagesItems: new Map(),
-      currentPage: 1, // Reiniciamos a la primera página al cambiar filtros
+      currentPage: 1,
     }));
     this.buscarTickets();
   }
@@ -77,17 +75,10 @@ export class GestionTicketsFacade {
     this.buscarTickets();
   }
   public buscarTickets(nuevaBusqueda: boolean = false) {
-    console.log(
-      'Buscando tickets con filtros:',
-      this.listState().filters,
-      'página:',
-      this.listState().currentPage,
-    );
     const state = this.listState();
     const pageNumber = state.currentPage;
 
     const cached = state.cachedPagesItems.get(pageNumber);
-    console.log('Página cacheada encontrada:', !!cached);
     if (cached && !nuevaBusqueda) {
       this.listState.update((s) => ({
         ...s,
@@ -112,11 +103,10 @@ export class GestionTicketsFacade {
       )
       .pipe(
         tap((response: ResultadosBusquedaDto) => {
-          console.log('Tickets DTO: ', response.data);
           this.updateCacheState(pageNumber, response);
         }),
         catchError((err) => {
-          console.error('Error cargando el listado de mascotas', err);
+          console.error('Error cargando el listado de tickets', err);
           this.listState.update((state) => ({ ...state, err, currentPageItems: [] }));
           return of([]);
         }),
@@ -159,9 +149,6 @@ export class GestionTicketsFacade {
       .pipe(
         map((dto) => mapTicketDtoToModel(dto)),
         tap((ticket) => this.detallesTicketState.set(ticket)),
-        tap((ticket) => {
-          console.log('El ticket que se recupera: ', ticket, this.detallesTicketState());
-        }),
         take(1),
       )
       .subscribe({

@@ -571,10 +571,11 @@
       "id": "03ec",
       "ticket_title": "test",
       "ticket_description": null,
-      "status_type_id": null,
+      "status_type_id": "1",
       "priority_level": "3",
       "created_at": null,
-      "assigned_user_id": null
+      "assigned_user_id": "102",
+      "priority_level_id": "1"
     },
     {
       "id": "c855",
@@ -602,6 +603,24 @@
       "priority_level_id": "1",
       "created_at": null,
       "assigned_user_id": null
+    },
+    {
+      "id": "0c5d",
+      "ticket_title": "Test",
+      "ticket_description": "Test updated",
+      "status_type_id": "3",
+      "priority_level_id": "1",
+      "created_at": null,
+      "assigned_user_id": "101"
+    },
+    {
+      "id": "7132",
+      "ticket_title": "Test fecha",
+      "ticket_description": null,
+      "status_type_id": "1",
+      "priority_level_id": "1",
+      "created_at": 1773915367597,
+      "assigned_user_id": "101"
     }
   ],
   "users": [

@@ -57,6 +57,8 @@ export class GestionTicketsService {
   }
 
   public createTicket(ticket: Partial<TicketDTO>): Observable<TicketDTO> {
+    const creationDate = new Date();
+    ticket.created_at = creationDate.getTime(); // Simulacion de que lo crea el backend
     return this.http.post<TicketDTO>(TICKET_API.create(), ticket);
   }
 

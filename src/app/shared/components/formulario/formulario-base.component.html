@@ -17,7 +17,13 @@
               [formControlName]="control.nombre"
               [placeholder]="control.placeholder || ''"
               [readonly]="isReadOnly() || control.readonly"
-              class="w-full rounded-md border border-gray-300 p-2 text-sm transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none read-only:bg-gray-50 read-only:text-gray-500"
+              [ngClass]="{
+                'border-red-500 bg-red-50 focus:ring-red-200': isInvalid(control.nombre),
+                'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200': !isInvalid(
+                  control.nombre
+                ),
+              }"
+              class="w-full rounded-md border p-2 text-sm transition outline-none"
             />
           }
 
@@ -25,7 +31,13 @@
             <select
               [id]="control.nombre"
               [formControlName]="control.nombre"
-              class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none disabled:bg-gray-50"
+              [ngClass]="{
+                'border-red-500 bg-red-50 focus:ring-red-200': isInvalid(control.nombre),
+                'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200': !isInvalid(
+                  control.nombre
+                ),
+              }"
+              class="w-full rounded-md border p-2 text-sm transition outline-none"
             >
               <option [ngValue]="null">Seleccione...</option>
               @for (opt of control.opciones; track opt.id) {
@@ -41,7 +53,13 @@
               [placeholder]="control.placeholder || ''"
               [readonly]="isReadOnly() || control.readonly"
               rows="3"
-              class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none read-only:bg-gray-50"
+              [ngClass]="{
+                'border-red-500 bg-red-50 focus:ring-red-200': isInvalid(control.nombre),
+                'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200': !isInvalid(
+                  control.nombre
+                ),
+              }"
+              class="w-full rounded-md border p-2 text-sm transition outline-none"
             ></textarea>
           }
 
@@ -51,15 +69,40 @@
                 type="checkbox"
                 [id]="control.nombre"
                 [formControlName]="control.nombre"
-                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                [ngClass]="{
+                  'border-red-500 bg-red-50 focus:ring-red-200': isInvalid(control.nombre),
+                  'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200': !isInvalid(
+                    control.nombre
+                  ),
+                }"
+                class="w-full rounded-md border p-2 text-sm transition outline-none"
               />
               <span class="text-sm text-gray-600">Activar</span>
             </div>
           }
         }
 
-        @if (form().get(control.nombre)?.invalid && form().get(control.nombre)?.touched) {
+        @if (
+          form().get(control.nombre)?.errors?.['required'] && form().get(control.nombre)?.touched
+        ) {
           <span class="text-xs text-red-500 mt-1">Este campo es requerido o inválido</span>
+        }
+        @if (
+          form().get(control.nombre)?.errors?.['maxlength'] && form().get(control.nombre)?.touched
+        ) {
+          <div class="flex items-center gap-1.5 mt-1 text-red-500">
+            <span class="text-xs font-medium">
+              Contenido demasiado largo:
+              <span class="font-bold">{{
+                form().get(control.nombre)?.errors?.['maxlength'].actualLength
+              }}</span>
+              de
+              <span class="underline">{{
+                form().get(control.nombre)?.errors?.['maxlength'].requiredLength
+              }}</span>
+              caracteres permitidos.
+            </span>
+          </div>
         }
       </div>
     }

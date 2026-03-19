@@ -25,4 +25,9 @@ export class FormularioBaseComponent {
     });
     return this.fb.group(controls, { validators: this.config().validators || [] });
   });
+
+  isInvalid(controlName: string): boolean {
+    const control = this.form().get(controlName);
+    return !!(control && control.invalid && (control.touched || control.dirty));
+  }
 }
