@@ -9,6 +9,7 @@ import { Ticket } from 'app/features/gestion-tickets/models/ticket.model';
 import { ToastrService } from 'app/core/services/toastr.service';
 import { TicketDTO } from 'app/features/gestion-tickets/dtos/ticket.dto';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-detail-tickets',
@@ -90,21 +91,32 @@ export class DetailTicketsComponent {
   guardarCambios() {
     if (this.updatedTicket && this.updatedTicket.valid) {
       if (this.updatedTicket.values.id) {
-        this.facade.actualizarTicket(this.updatedTicket.values).subscribe((ticket: TicketDTO) => {
-          this.toastrService.show('Ticket actualizado con éxito', 'success');
-          if (ticket?.id) this.facade.abrirDetalles(ticket.id);
-        });
+        this.facade
+          .actualizarTicket(this.updatedTicket.values)
+          .pipe(take(1))
+          .subscribe((ticket: TicketDTO) => {
+            this.toastrService.show('Ticket actualizado con éxito', 'success');
+            //if (ticket?.id) this.facade.abrirDetalles(ticket.id);
+            this.volverListado(true);
+          });
       } else {
         delete this.updatedTicket.values.id; // Aseguramos que no se envíe un ID al crear
-        this.facade.crearTicket(this.updatedTicket.values).subscribe((ticket: TicketDTO) => {
-          this.toastrService.show('Ticket creado con éxito', 'success');
-          if (ticket?.id) this.facade.abrirDetalles(ticket.id);
-        });
+        this.facade
+          .crearTicket(this.updatedTicket.values)
+          .pipe(take(1))
+          .subscribe((ticket: TicketDTO) => {
+            this.toastrService.show('Ticket creado con éxito', 'success');
+            //if (ticket?.id) this.facade.abrirDetalles(ticket.id);
+            this.volverListado(true);
+          });
       }
     }
   }
 
-  volverListado() {
+  public volverListado(actualizar?: boolean) {
+    if (actualizar) {
+      this.facade.buscarTickets();
+    }
     this.router.navigate(['gestion-tickets']);
   }
 }
