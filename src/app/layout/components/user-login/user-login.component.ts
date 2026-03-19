@@ -34,7 +34,7 @@ import { AuthService } from 'app/core/services/auth.service';
         </button>
       </form>
       @if (loginError) {
-        <div style="color: red; font-size: 0.8rem;">{{ loginError }}</div>
+        <div style="color: red; font-size: 0.8rem; padding: 2rem;">{{ loginError }}</div>
       }
     } @else {
       <span>Bienvenido, {{ authService.currentUser()?.fullName }}</span>
