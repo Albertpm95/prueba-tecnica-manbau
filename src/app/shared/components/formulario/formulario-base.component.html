@@ -6,10 +6,11 @@
     @if (!control.oculto) {
       <div [ngClass]="control.columnas || 'col-span-12'" class="flex flex-col gap-1.5">
         <label [for]="control.nombre" class="text-sm font-semibold text-gray-700">
+          @if (form().get(control.nombre)?.errors?.['required']) {
+            <span class="text-red-500">*</span>
+          }
           {{ control.label }}
         </label>
-        {{ isReadOnly() ? 'Modo solo lectura' : 'Modo edición' }} - {{ control.tipo }} -
-        {{ control.nombre }} {{ control.readonly ? '(readonly)' : '' }}
         @switch (control.tipo) {
           @case ('input') {
             <input

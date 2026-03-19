@@ -143,19 +143,21 @@ export class GestionTicketsFacade {
       };
     });
   }
-  public abrirDetalles(id: string) {
-    this.apiService
-      .getTicketById(id)
-      .pipe(
-        map((dto) => mapTicketDtoToModel(dto)),
-        tap((ticket) => this.detallesTicketState.set(ticket)),
-        take(1),
-      )
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/gestion-tickets', 'detalle', id]);
-        },
-      });
+  public abrirDetalles(idTicket: string) {
+    if (idTicket == 'nuevo') this.detallesTicketState.set(undefined);
+    else
+      this.apiService
+        .getTicketById(idTicket)
+        .pipe(
+          map((dto) => mapTicketDtoToModel(dto)),
+          tap((ticket) => this.detallesTicketState.set(ticket)),
+          take(1),
+        )
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/gestion-tickets', 'detalle', idTicket]);
+          },
+        });
   }
   public crearTicket(ticket: Partial<Ticket>): Observable<TicketDTO> {
     return this.apiService.createTicket(mapTicketModelToDto(ticket));
