@@ -4,8 +4,8 @@
       "id": "1",
       "ticket_title": "Error en el login de usuarios",
       "ticket_description": "Los usuarios no pueden acceder con cuentas de Google.",
-      "status_type_id": 1,
-      "priority_level_id": 1,
+      "status_type_id": "1",
+      "priority_level_id": "2",
       "created_at": 1772325600000,
       "assigned_user_id": 101
     },
@@ -95,7 +95,7 @@
       "ticket_title": "Implementar notificaciones por email",
       "ticket_description": "Los usuarios deben recibir notificaciones cuando hay cambios en sus tickets.",
       "status_type_id": 1,
-      "priority_level_id": 2,
+      "priority_level_id": "4",
       "created_at": 1773500000000,
       "assigned_user_id": 101
     },

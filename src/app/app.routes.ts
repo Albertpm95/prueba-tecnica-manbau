@@ -5,7 +5,6 @@ import { authGuard } from './core/guards/auth.guard';
 export const routes: Routes = [
   {
     path: 'gestion-tickets',
-    providers: [GestionTicketsFacade],
     canActivate: [authGuard],
     children: [
       {

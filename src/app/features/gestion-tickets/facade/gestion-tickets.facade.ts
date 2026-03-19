@@ -15,8 +15,9 @@ import { UserDTOtoModel } from 'app/core/mappers/user.mapper';
 import { TicketDTO } from '../dtos/ticket.dto';
 import { Router } from '@angular/router';
 import { CatalogoService } from 'app/core/services/catalogo.service';
+import { tick } from '@angular/core/testing';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GestionTicketsFacade {
   private readonly apiService = inject(GestionTicketsService);
   private readonly catalogService = inject(CatalogoService);
@@ -75,7 +76,7 @@ export class GestionTicketsFacade {
     }));
     this.buscarTickets();
   }
-  public buscarTickets() {
+  public buscarTickets(nuevaBusqueda: boolean = false) {
     console.log(
       'Buscando tickets con filtros:',
       this.listState().filters,
@@ -87,7 +88,7 @@ export class GestionTicketsFacade {
 
     const cached = state.cachedPagesItems.get(pageNumber);
     console.log('Página cacheada encontrada:', !!cached);
-    if (cached) {
+    if (cached && !nuevaBusqueda) {
       this.listState.update((s) => ({
         ...s,
         currentPageItems: cached.items,
@@ -98,6 +99,7 @@ export class GestionTicketsFacade {
       }));
       return;
     }
+
     this.loading.set(true);
 
     this.apiService
@@ -110,6 +112,7 @@ export class GestionTicketsFacade {
       )
       .pipe(
         tap((response: ResultadosBusquedaDto) => {
+          console.log('Tickets DTO: ', response.data);
           this.updateCacheState(pageNumber, response);
         }),
         catchError((err) => {
@@ -156,6 +159,9 @@ export class GestionTicketsFacade {
       .pipe(
         map((dto) => mapTicketDtoToModel(dto)),
         tap((ticket) => this.detallesTicketState.set(ticket)),
+        tap((ticket) => {
+          console.log('El ticket que se recupera: ', ticket, this.detallesTicketState());
+        }),
         take(1),
       )
       .subscribe({

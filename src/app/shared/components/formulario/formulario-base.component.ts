@@ -1,9 +1,7 @@
 import { Component, input, inject, computed, effect, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { ConfigFormulario } from '../../models/config-formulario';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { Subject, switchMap, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-formulario-base',
@@ -15,7 +13,6 @@ export class FormularioBaseComponent {
   private fb = inject(FormBuilder);
 
   public config = input.required<ConfigFormulario>();
-  public values = input<unknown>();
   public isReadOnly = input<boolean>(false);
 
   public form = computed(() => {

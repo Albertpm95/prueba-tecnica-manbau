@@ -33,7 +33,6 @@ import { finalize } from 'rxjs';
       }
     `,
   ],
-  providers: [GestionTicketsFacade],
 })
 export class GestionTicketsPage {
   private facade = inject(GestionTicketsFacade);

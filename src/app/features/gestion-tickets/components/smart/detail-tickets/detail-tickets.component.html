@@ -1,7 +1,6 @@
 @if (configForm()) {
   <app-formulario-escritura
     [config]="configForm()"
-    [values]="ticketDetails()"
     (formValueChange)="setValueForms($event)"
   ></app-formulario-escritura>
   <button
