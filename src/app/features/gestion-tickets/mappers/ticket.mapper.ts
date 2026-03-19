@@ -8,7 +8,7 @@ export function mapTicketDtoToModel(dto: TicketDTO): Ticket {
     ticketTitle: dto.ticket_title,
     ticketDescription: dto.ticket_description,
     statusType: dto.status_type_id,
-    priorityLevel: dto.priority_level,
+    priorityLevel: dto.priority_level_id,
     createdAt: dto.created_at,
     assignedUserId: dto.assigned_user_id,
   };
@@ -19,7 +19,7 @@ export function mapTicketModelToDto(model: Partial<Ticket>): Partial<TicketDTO> 
     ticket_title: model.ticketTitle,
     ticket_description: model.ticketDescription,
     status_type_id: model.statusType,
-    priority_level: model.priorityLevel,
+    priority_level_id: model.priorityLevel,
     created_at: model.createdAt,
     assigned_user_id: model.assignedUserId,
   };
