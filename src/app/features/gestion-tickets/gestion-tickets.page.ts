@@ -12,9 +12,9 @@ import { finalize } from 'rxjs';
   imports: [CommonModule, ListaTicketsComponent],
   template: `
     <div>
-      <h1>Gestión de Tickets</h1>
+      <h1 class="my-4"><b>Gestión de Tickets</b></h1>
       <button
-        class="rounded border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 shadow-sm"
+        class="rounded border border-gray-300 px-4 py-2 my-4 text-sm font-semibold text-gray-700 hover:bg-gray-50 shadow-sm"
         (click)="nuevoTicket()"
       >
         Nuevo Ticket
