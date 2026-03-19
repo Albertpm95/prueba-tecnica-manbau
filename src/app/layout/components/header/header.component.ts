@@ -28,7 +28,7 @@ import { LoadingService } from 'app/core/services/loading.service';
       </div>
     }
     @if (toastService.toast(); as t) {
-      <div class="fixed top-5 right-5 z-[99] animate-fade-in">
+      <div class="fixed top-20 right-5 z-[99] animate-fade-in">
         <div
           [class]="{
             'bg-green-600': t.type === 'success',

@@ -9,8 +9,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   loadingService.show();
 
   return next(req).pipe(
-    delay(1000),
-    // finalize se ejecuta tanto si la petición va bien como si falla
+    delay(1000), // Delay forzado para simular conexion "lenta" al backend.
     finalize(() => loadingService.hide()),
   );
 };

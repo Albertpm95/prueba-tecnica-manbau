@@ -8,7 +8,7 @@ import { PaginationInfo } from '../../../models/pagination';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.css']
+  styleUrls: ['./pagination.component.css'],
 })
 export class PaginationComponent {
   private readonly fb = inject(FormBuilder);
@@ -17,7 +17,7 @@ export class PaginationComponent {
   public totalPages = input<number>(1);
   public paginationChange = output<Omit<PaginationInfo, 'totalPages'>>();
 
-  public pageSizeControl = new FormControl(10); 
+  public pageSizeControl = new FormControl(10);
 
   public previousPage(): void {
     if (this.currentPage() > 1) {
@@ -32,7 +32,7 @@ export class PaginationComponent {
   }
 
   public onPageSizeChange(size: number): void {
-    this.emitChange(1, size); // Reset to page 1
+    this.emitChange(1, size);
   }
 
   private emitChange(currentPage: number, pageSize: number): void {

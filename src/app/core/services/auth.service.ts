@@ -16,13 +16,11 @@ export class AuthService {
   private toastrService = inject(ToastrService);
   private router = inject(Router);
 
-  // 1. EL SIGNAL SE HIDRATA AL INSTANCIARSE: Evita fallos en F5
   private currentUserSignal = signal<User | null>(this.getUserFromStorage());
 
   public currentUser = computed(() => this.currentUserSignal());
 
   public login(username: string, password: string): Observable<boolean> {
-    // Si ya hay sesión, navegamos y listo
     if (this.currentUserSignal()) {
       this.router.navigate(['gestion-tickets']);
       return of(true);
@@ -36,7 +34,6 @@ export class AuthService {
         if (userDto) {
           const mappedUser = UserDTOtoModel(userDto);
 
-          // 2. PERSISTENCIA TOTAL
           this.currentUserSignal.set(mappedUser);
           sessionStorage.setItem('access_token', userDto.token);
           sessionStorage.setItem('current_user', JSON.stringify(mappedUser));
@@ -53,15 +50,13 @@ export class AuthService {
   }
 
   public logout(): void {
-    // 3. LIMPIEZA TOTAL DE RASTROS
     this.currentUserSignal.set(null);
-    sessionStorage.clear(); // O borra items específicos si prefieres
+    sessionStorage.clear();
     this.toastrService.show('Sesión cerrada', 'info');
     this.router.navigate(['login']);
   }
 
   public hasRole(): boolean {
-    // Este método ahora es ultra fiable porque el signal está hidratado
     const user = this.currentUser();
     return !!user?.userRole;
   }

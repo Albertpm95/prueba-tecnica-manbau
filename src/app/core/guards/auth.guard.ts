@@ -11,7 +11,5 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
-  // Si no tiene rol, redirigimos a login usando el Router de Angular
-  // Esto evita que la app se quede en un limbo y recargue
   return router.parseUrl('');
 };
