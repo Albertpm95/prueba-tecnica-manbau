@@ -23,7 +23,7 @@ export class DetailTicketsComponent {
   private router = inject(Router);
 
   public updatedTicket: { values: Ticket; valid: boolean } | undefined;
-  public idTicket = input<number>();
+  public idTicket = input<string>();
   public configForm = computed<ConfigFormulario>(() => {
     const prioridades = this.facade.prioridades();
     const estados = this.facade.estados();
@@ -88,8 +88,14 @@ export class DetailTicketsComponent {
       validators: [],
     };
   });
+
   ngOnInit(): void {
     this.facade.loadCatalogos().subscribe();
+    const idTicket: string | undefined = this.idTicket();
+
+    if (idTicket) {
+      this.facade.abrirDetalles(idTicket);
+    }
   }
 
   public setValueForms($event: { values: Ticket; valid: boolean }) {

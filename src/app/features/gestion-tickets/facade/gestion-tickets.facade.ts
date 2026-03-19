@@ -143,7 +143,7 @@ export class GestionTicketsFacade {
       };
     });
   }
-  public abrirDetalles(id: number) {
+  public abrirDetalles(id: string) {
     this.apiService
       .getTicketById(id)
       .pipe(

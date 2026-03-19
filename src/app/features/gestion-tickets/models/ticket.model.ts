@@ -1,5 +1,5 @@
 export interface Ticket {
-  id?: number;
+  id?: string; // String porque el json-server lo crea como string.
   ticketTitle: string;
   ticketDescription: string;
   statusType: number;

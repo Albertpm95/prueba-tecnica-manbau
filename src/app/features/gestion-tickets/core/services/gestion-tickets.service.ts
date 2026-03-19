@@ -15,7 +15,7 @@ import { TICKET_API } from '../api/ticket.api';
 export class GestionTicketsService {
   private http = inject(HttpClient);
 
-  public getTicketById(id: number): Observable<TicketDTO> {
+  public getTicketById(id: string): Observable<TicketDTO> {
     return this.http.get<TicketDTO>(TICKET_API.detail(id));
   }
 

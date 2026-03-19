@@ -15,7 +15,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'detalle/:id',
+        path: 'detalle/:idTicket',
         loadComponent: () =>
           import('./features/gestion-tickets/components/smart/detail-tickets/detail-tickets.component').then(
             (m) => m.DetailTicketsComponent,

@@ -1,5 +1,5 @@
 export interface TicketDTO {
-  id?: number;
+  id?: string; // String porque el json-server los crea como string
   ticket_title: string;
   ticket_description: string;
   status_type_id: number;
