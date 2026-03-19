@@ -8,6 +8,7 @@
  - Gemini para discutir la creacion de un componente especifico para el layout (usuario)
  - Copilot para la gestion del usuario. 
  - Copilot para creacion de estructura segun lo planteado en el Context.md
+ - Gemini para realizar una ultima refactorizacion de la estructura de carpetas moviendo la logica de usuarios (login) y catalogos a Core ya que es transversal a la aplicación.
 
 # Paginacion
 He elegido hacerlo en el lado del servidor porque al final la bbdd siempre va a ser mas eficiente con grandes cantidades de datos
@@ -18,9 +19,6 @@ He elegido hacerlo en el lado del servidor porque al final la bbdd siempre va a 
 
 # Dependencias
 Angualar 21, la version estable mas moderna
-ngx-toastr para notificar llamadas al backend
-ngx-translate para centralizar textos
-ngx-spinner para informar de peticiones en curso
 tailwind para los estilos
 husky y lint-staged
 
