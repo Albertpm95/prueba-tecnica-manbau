@@ -1,58 +1,19 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { CatalogoDTO } from 'app/shared/dtos/catalogo.dto';
-import { UserDTO } from 'app/shared/dtos/user.dto';
+import { CatalogoDTO } from 'app/core/dtos/catalogo.dto';
+import { UserDTO } from 'app/core/dtos/user.dto';
 import { Observable, of, tap } from 'rxjs';
 import { ResultadosBusquedaDto } from '../../dtos/resultados-busqueda.dto';
 import { TicketDTO } from '../../dtos/ticket.dto';
-import { CATALOGOS_API, TICKET_API, USERS_API } from '../api/ticket.api';
 import { Injectable, inject, signal } from '@angular/core';
+import { CATALOGOS_API } from 'app/core/api/catalogos';
+import { USERS_API } from 'app/core/api/users';
+import { TICKET_API } from '../api/ticket.api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GestionTicketsService {
   private http = inject(HttpClient);
-  private readonly _catalogoEstados = signal<CatalogoDTO[]>([]);
-  private readonly _catalogoPrioridades = signal<CatalogoDTO[]>([]);
-  private readonly _usuarios = signal<UserDTO[]>([]);
-
-  // 2. Públicos y READONLY para el Facade y componentes
-  // Al usar .asReadonly(), el compilador impide usar .set() o .update() fuera de aquí
-  public readonly estados = this._catalogoEstados.asReadonly();
-  public readonly prioridades = this._catalogoPrioridades.asReadonly();
-  public readonly usuarios = this._usuarios.asReadonly();
-
-  public getCatalogoEstados(): Observable<CatalogoDTO[]> {
-    if (this._catalogoEstados().length > 0) {
-      return of(this._catalogoEstados());
-    }
-    return this.http.get<CatalogoDTO[]>(CATALOGOS_API.estados()).pipe(
-      tap((dtos) => {
-        this._catalogoEstados.set(dtos);
-      }),
-    );
-  }
-
-  public getCatalogoPrioridades(): Observable<CatalogoDTO[]> {
-    if (this._catalogoPrioridades().length > 0) {
-      return of(this._catalogoPrioridades());
-    }
-    return this.http.get<CatalogoDTO[]>(CATALOGOS_API.prioridades()).pipe(
-      tap((dtos) => {
-        this._catalogoPrioridades.set(dtos);
-      }),
-    );
-  }
-  public getUsuarios(): Observable<UserDTO[]> {
-    if (this._usuarios().length > 0) {
-      return of(this._usuarios());
-    }
-    return this.http.get<UserDTO[]>(`${CATALOGOS_API.base}/users`).pipe(
-      tap((dtos) => {
-        this._usuarios.set(dtos);
-      }),
-    );
-  }
 
   public getTicketById(id: number): Observable<TicketDTO> {
     return this.http.get<TicketDTO>(TICKET_API.detail(id));
@@ -90,8 +51,8 @@ export class GestionTicketsService {
     if (filtro.status_type_id) {
       params = params.set('status_type_id', filtro.status_type_id);
     }
-    if (filtro.priority_level) {
-      params = params.set('priority_level', filtro.priority_level);
+    if (filtro.priority_level_id) {
+      params = params.set('priority_level_id', filtro.priority_level_id);
     }
 
     console.log('Parámetros de consulta:', params.toString());
