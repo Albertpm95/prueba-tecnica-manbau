@@ -1,5 +1,5 @@
 import { ValidatorFn } from '@angular/forms';
-import { CatalogoDTO } from '../dtos/catalogo.dto';
+import { CatalogoDTO } from '../../core/dtos/catalogo.dto';
 
 export interface ConfigControl {
   oculto?: boolean; // Si el control está oculto, no se muestra en el formulario
