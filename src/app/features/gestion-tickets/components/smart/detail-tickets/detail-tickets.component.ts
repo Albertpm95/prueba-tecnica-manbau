@@ -4,7 +4,7 @@ import { Validators } from '@angular/forms';
 import { GestionTicketsFacade } from 'app/features/gestion-tickets/facade/gestion-tickets.facade';
 import { FormularioEscrituraComponent } from 'app/shared/components/formulario/formulario-escritura.component';
 import { ConfigFormulario } from 'app/shared/models/config-formulario';
-import { UserDTOtoModel } from 'app/shared/mappers/user.mapper';
+import { UserDTOtoModel } from 'app/core/mappers/user.mapper';
 import { Ticket } from 'app/features/gestion-tickets/models/ticket.model';
 import { ToastrService } from 'app/core/services/toastr.service';
 import { TicketDTO } from 'app/features/gestion-tickets/dtos/ticket.dto';

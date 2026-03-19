@@ -11,19 +11,23 @@ import { TicketFilters } from '../models/ticket-filter';
 import { TicketState } from '../models/ticket.state';
 import { Ticket } from '../models/ticket.model';
 import { ResultadosBusquedaDto } from '../dtos/resultados-busqueda.dto';
-import { UserDTOtoModel } from 'app/shared/mappers/user.mapper';
+import { UserDTOtoModel } from 'app/core/mappers/user.mapper';
 import { TicketDTO } from '../dtos/ticket.dto';
 import { Router } from '@angular/router';
+import { CatalogoService } from 'app/core/services/catalogo.service';
 
 @Injectable()
 export class GestionTicketsFacade {
-  private readonly service = inject(GestionTicketsService);
+  private readonly apiService = inject(GestionTicketsService);
+  private readonly catalogService = inject(CatalogoService);
   private readonly router = inject(Router);
 
   // Exponemos los signals de solo lectura del servicio
-  public readonly estados = this.service.estados;
-  public readonly prioridades = this.service.prioridades;
-  public readonly usuarios = computed(() => this.service.usuarios().map((u) => UserDTOtoModel(u)));
+  public readonly estados = this.catalogService.estados;
+  public readonly prioridades = this.catalogService.prioridades;
+  public readonly usuarios = computed(() =>
+    this.catalogService.usuarios().map((u) => UserDTOtoModel(u)),
+  );
 
   // Objetos cacheados
   public readonly listState = signal<TicketState>({
@@ -47,9 +51,9 @@ export class GestionTicketsFacade {
     // Disparamos la carga. El tap del servicio actualizará los signals.
     this.loading.set(true);
     return forkJoin({
-      estados: this.service.getCatalogoEstados(),
-      prioridades: this.service.getCatalogoPrioridades(),
-      usuarios: this.service.getUsuarios(),
+      estados: this.catalogService.getCatalogoEstados(),
+      prioridades: this.catalogService.getCatalogoPrioridades(),
+      usuarios: this.catalogService.getUsuarios(),
     }).pipe(finalize(() => this.loading.set(false)));
   }
 
@@ -96,7 +100,7 @@ export class GestionTicketsFacade {
     }
     this.loading.set(true);
 
-    this.service
+    this.apiService
       .getTickets(
         state.currentPage,
         state.pageSize,
@@ -147,7 +151,7 @@ export class GestionTicketsFacade {
     });
   }
   public abrirDetalles(id: number) {
-    this.service
+    this.apiService
       .getTicketById(id)
       .pipe(
         map((dto) => mapTicketDtoToModel(dto)),
@@ -161,9 +165,9 @@ export class GestionTicketsFacade {
       });
   }
   public crearTicket(ticket: Partial<Ticket>): Observable<TicketDTO> {
-    return this.service.createTicket(mapTicketModelToDto(ticket));
+    return this.apiService.createTicket(mapTicketModelToDto(ticket));
   }
   public actualizarTicket(ticket: Partial<Ticket>): Observable<TicketDTO> {
-    return this.service.updateTicket(mapTicketModelToDto(ticket));
+    return this.apiService.updateTicket(mapTicketModelToDto(ticket));
   }
 }
