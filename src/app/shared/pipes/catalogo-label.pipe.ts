@@ -1,6 +1,6 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { CatalogoService } from '../../core/services/catalogo.service';
-import { CatalogoDTO } from 'app/core/dtos/catalogo.dto';
+import { CatalogoDTO } from '@core-dtos/catalogo';
 
 type CatalogName = 'estados' | 'prioridades';
 @Pipe({

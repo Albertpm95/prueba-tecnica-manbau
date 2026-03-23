@@ -1,10 +1,9 @@
-import { Component, inject, signal, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { finalize, take } from 'rxjs';
 import { ListaTicketsComponent } from './components/smart/lista-tickets/lista-tickets.component';
 import { GestionTicketsFacade } from './facade/gestion-tickets.facade';
-import { Router } from '@angular/router';
-import { take } from 'rxjs/internal/operators/take';
-import { finalize } from 'rxjs';
 
 @Component({
   selector: 'page-gestion-tickets',

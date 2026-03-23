@@ -1,13 +1,13 @@
-import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, input, computed } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { GestionTicketsFacade } from 'app/features/gestion-tickets/facade/gestion-tickets.facade';
-import { FormularioEscrituraComponent } from 'app/shared/components/formulario/formulario-escritura.component';
-import { ConfigFormulario } from 'app/shared/models/config-formulario';
-import { Ticket } from 'app/features/gestion-tickets/models/ticket.model';
-import { ToastrService } from 'app/core/services/toastr.service';
-import { TicketDTO } from 'app/features/gestion-tickets/dtos/ticket.dto';
 import { Router } from '@angular/router';
+import { ToastrService } from '@core-services/toastr.service';
+import { TicketDTO } from '@gestion-tickets/dtos/ticket.dto';
+import { GestionTicketsFacade } from '@gestion-tickets/facade/gestion-tickets.facade';
+import { Ticket } from '@gestion-tickets/models/ticket.model';
+import { FormularioEscrituraComponent } from '@shared-components/formulario/formulario-escritura.component';
+import { ConfigFormulario } from '@shared-models/config-formulario';
 import { take } from 'rxjs';
 
 @Component({

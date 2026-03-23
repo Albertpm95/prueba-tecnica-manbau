@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserDTO } from 'app/core/dtos/user.dto';
-import { UserDTOtoModel } from 'app/core/mappers/user.mapper';
-import { User } from 'app/core/models/user';
-import { environment } from 'environments/environments';
+import { UserDTO } from '@core-dtos/user';
+import { UserDTOtoModel } from '@core-mappers/user';
+import { environment } from '@env/environments';
 import { Observable, of, map } from 'rxjs';
 import { ToastrService } from './toastr.service';
+import { User } from '@core-models/user';
 
 @Injectable({
   providedIn: 'root',

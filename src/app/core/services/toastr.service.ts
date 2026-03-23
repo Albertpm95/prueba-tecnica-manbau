@@ -1,5 +1,5 @@
 import { effect, Injectable, signal, untracked } from '@angular/core';
-import { Toast } from 'app/shared/models/toast';
+import { Toast } from '@shared-models/toast';
 
 @Injectable({ providedIn: 'root' })
 export class ToastrService {

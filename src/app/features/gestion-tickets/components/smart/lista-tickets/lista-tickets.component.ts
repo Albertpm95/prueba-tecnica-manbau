@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, computed } from '@angular/core';
-import { GestionTicketsFacade } from '../../../facade/gestion-tickets.facade';
-import { PaginationInfo } from '../../../../../shared/models/pagination';
-import { TicketFilters } from '../../../models/ticket-filter';
-import { Ticket } from '../../../models/ticket.model';
-import { PaginationComponent } from '../../dumb/pagination/pagination.component';
-import { TicketFilterComponent } from '../../dumb/ticket-filter/ticket-filter.component';
-import { TicketTableComponent } from '../../dumb/ticket-table/ticket-table.component';
+import { PaginationComponent } from '@gestion-tickets/components/dumb/pagination/pagination.component';
+import { TicketFilterComponent } from '@gestion-tickets/components/dumb/ticket-filter/ticket-filter.component';
+import { TicketTableComponent } from '@gestion-tickets/components/dumb/ticket-table/ticket-table.component';
+import { GestionTicketsFacade } from '@gestion-tickets/facade/gestion-tickets.facade';
+import { TicketFilters } from '@gestion-tickets/models/ticket-filter';
+import { Ticket } from '@gestion-tickets/models/ticket.model';
+import { PaginationInfo } from '@shared-models/pagination';
 
 @Component({
   selector: 'app-lista-tickets',

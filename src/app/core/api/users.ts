@@ -1,4 +1,4 @@
-import { environment } from 'environments/environments';
+import { environment } from '@env/environments';
 
 export const USERS_API = {
   base: `${environment.apiUrl}/users`,

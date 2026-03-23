@@ -1,9 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { GestionTicketsFacade } from 'app/features/gestion-tickets/facade/gestion-tickets.facade';
-import { FormularioEscrituraComponent } from 'app/shared/components/formulario/formulario-escritura.component';
-import { ConfigFormulario } from 'app/shared/models/config-formulario';
+import { GestionTicketsFacade } from '@gestion-tickets/facade/gestion-tickets.facade';
+import { FormularioEscrituraComponent } from '@shared-components/formulario/formulario-escritura.component';
+import { ConfigFormulario } from '@shared-models/config-formulario';
 
 @Component({
   selector: 'app-modal-nuevo-ticket',

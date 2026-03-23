@@ -16,17 +16,48 @@
     "module": "preserve",
     "baseUrl": "src",
     "paths": {
-      "@env/*": ["src/app/environments/*"],
-      //"@shared/*": ["src/app/shared/*"],
-      "@guards/*": ["src/app/shared/*"],
-      "@interceptors/*": ["src/app/shared/*"],
-      "@core-services/*": ["src/app/shared/*"],
-      //"@core/*": ["src/app/core/*"],
-      "@shared-components/*": ["src/app/core/*"],
-      "@dtos/*": ["src/app/core/*"],
-      "@models/*": ["src/app/core/*"],
-      "@mappers/*": ["src/app/core/*"],
-      "@features/*": ["src/app/features/*"],
+      "@env/*": [
+        "environments/*"
+      ],
+      "@guards/*": [
+        "app/core/guards/*"
+      ],
+      "@core-api/*": [
+        "app/core/api/*"
+      ],
+      "@interceptors/*": [
+        "app/core/interceptors/*"
+      ],
+      "@core-services/*": [
+        "app/core/services/*"
+      ],
+      "@core-dtos/*": [
+        "app/core/dtos/*"
+      ],
+      "@core-models/*": [
+        "app/core/models/*"
+      ],
+      "@core-mappers/*": [
+        "app/core/mappers/*"
+      ],
+      "@shared-components/*": [
+        "app/shared/components/*"
+      ],
+      "@shared-dtos/*": [
+        "app/shared/dtos/*"
+      ],
+      "@shared-models/*": [
+        "app/shared/models/*"
+      ],
+      "@shared-pipes/*": [
+        "app/shared/pipes/*"
+      ],
+      "@shared-pages/*": [
+        "app/shared/pages/*"
+      ],
+      "@gestion-tickets/*": [
+        "app/features/gestion-tickets/*"
+      ],
     }
   },
   "angularCompilerOptions": {
@@ -43,5 +74,5 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ]  
+  ]
 }

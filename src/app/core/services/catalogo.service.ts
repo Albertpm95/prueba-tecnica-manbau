@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
-import { CatalogoDTO } from '../dtos/catalogo.dto';
-import { UserDTO } from '../dtos/user.dto';
+import { Injectable, inject, signal } from '@angular/core';
+import { CATALOGOS_API } from '@core-api/catalogos';
+import { CatalogoDTO } from '@core-dtos/catalogo';
+import { UserDTO } from '@core-dtos/user';
 import { Observable, of, tap } from 'rxjs';
-import { CATALOGOS_API } from '../api/catalogos';
 
 @Injectable({ providedIn: 'root' })
 export class CatalogoService {

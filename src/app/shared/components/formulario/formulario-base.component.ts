@@ -1,7 +1,7 @@
-import { Component, input, inject, computed, effect, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, input, computed } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { ConfigFormulario } from '../../models/config-formulario';
+import { ConfigFormulario } from '@shared-models/config-formulario';
 
 @Component({
   selector: 'app-formulario-base',

@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { LoadingService } from '@core-services/loading.service';
+import { ToastrService } from '@core-services/toastr.service';
 import { UserLoginComponent } from '../user-login/user-login.component';
-import { ToastrService } from 'app/core/services/toastr.service';
-import { LoadingService } from 'app/core/services/loading.service';
 
 @Component({
   selector: 'app-header',

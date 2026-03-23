@@ -11,7 +11,7 @@ import { TicketFilters } from '../models/ticket-filter';
 import { TicketState } from '../models/ticket.state';
 import { Ticket } from '../models/ticket.model';
 import { ResultadosBusquedaDto } from '../dtos/resultados-busqueda.dto';
-import { UserDTOtoModel } from 'app/core/mappers/user.mapper';
+import { UserDTOtoModel } from '@core-mappers/user';
 import { TicketDTO } from '../dtos/ticket.dto';
 import { Router } from '@angular/router';
 import { CatalogoService } from 'app/core/services/catalogo.service';

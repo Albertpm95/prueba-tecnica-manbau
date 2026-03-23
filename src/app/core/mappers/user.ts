@@ -1,5 +1,5 @@
-import { UserDTO } from '../dtos/user.dto';
-import { User } from '../models/user';
+import { UserDTO } from '@core-dtos/user';
+import { User } from '@core-models/user';
 
 export function UserDTOtoModel(dto: UserDTO): User {
   // En un caso real estaria separado el DTO/Modelo de usuarios (para usuarios asignados) con el propio usuario

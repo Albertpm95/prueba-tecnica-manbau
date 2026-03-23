@@ -1,6 +1,6 @@
-import { TicketDTO } from '../dtos/ticket.dto';
-import { TicketFilters } from '../models/ticket-filter';
-import { Ticket } from '../models/ticket.model';
+import { TicketDTO } from '@gestion-tickets/dtos/ticket.dto';
+import { TicketFilters } from '@gestion-tickets/models/ticket-filter';
+import { Ticket } from '@gestion-tickets/models/ticket.model';
 
 export function mapTicketDtoToModel(dto: TicketDTO): Ticket {
   return {

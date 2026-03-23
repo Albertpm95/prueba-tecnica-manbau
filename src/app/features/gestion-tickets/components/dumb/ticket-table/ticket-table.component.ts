@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Ticket } from '../../../models/ticket.model';
-import { CatalogoLabelPipe } from 'app/shared/pipe/catalogo-label.pipe';
+import { Ticket } from '@gestion-tickets/models/ticket.model';
+import { CatalogoLabelPipe } from '@shared-pipes/catalogo-label.pipe';
 
 @Component({
   selector: 'app-ticket-table',

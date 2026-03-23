@@ -1,4 +1,4 @@
-import { environment } from 'environments/environments';
+import { environment } from '@env/environments';
 
 export const CATALOGOS_API = {
   base: `${environment.apiUrl}`,

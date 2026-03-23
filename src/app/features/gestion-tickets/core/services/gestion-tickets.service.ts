@@ -1,13 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { CatalogoDTO } from 'app/core/dtos/catalogo.dto';
-import { UserDTO } from 'app/core/dtos/user.dto';
-import { Observable, of, tap } from 'rxjs';
-import { ResultadosBusquedaDto } from '../../dtos/resultados-busqueda.dto';
-import { TicketDTO } from '../../dtos/ticket.dto';
-import { Injectable, inject, signal } from '@angular/core';
-import { CATALOGOS_API } from 'app/core/api/catalogos';
-import { USERS_API } from 'app/core/api/users';
-import { TICKET_API } from '../api/ticket.api';
+import { Injectable, inject } from '@angular/core';
+import { USERS_API } from '@core-api/users';
+import { UserDTO } from '@core-dtos/user';
+import { ResultadosBusquedaDto } from '@gestion-tickets/dtos/resultados-busqueda.dto';
+import { TicketDTO } from '@gestion-tickets/dtos/ticket.dto';
+import { Observable } from 'rxjs';
+import { TICKET_API } from '@gestion-tickets/core/api/ticket';
 
 @Injectable({
   providedIn: 'root',

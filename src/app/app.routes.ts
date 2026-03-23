@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
-import { GestionTicketsFacade } from './features/gestion-tickets/facade/gestion-tickets.facade';
-import { authGuard } from './core/guards/auth.guard';
+import { authGuard } from '@guards/auth.guard';
 
 export const routes: Routes = [
   {
